@@ -14,9 +14,12 @@
 - Gemini CLI
 - Others
 
+且本仓库是本人 [Fish-AI-Handbook](https://github.com/zhu-jl18/Fish-AI-Handbook) 的一个资源跳转仓库，
+对应章节部分为 Daily 和 Advanced中 Vibe Coding 部分。
+
 ## 目录结构
 
-```
+```text
 .
 ├── AGENTS.md/        # 全局约束文件
 ├── sub-agents/      # Sub-Agents 配置
@@ -57,5 +60,3 @@
 ## 许可证
 
 MIT
-
-
