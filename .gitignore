@@ -1,0 +1,7 @@
+# Local configuration files
+.claude/
+desktop.ini
+
+# Windows system files
+Thumbs.db
+*.lnk
