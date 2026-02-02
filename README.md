@@ -14,9 +14,6 @@
 - Gemini CLI
 - Others
 
-且本仓库是本人 [Fish-AI-Handbook](https://github.com/zhu-jl18/Fish-AI-Handbook) 的一个资源跳转仓库，
-对应章节部分为 Daily 和 Advanced中 Vibe Coding 部分。
-
 ## 目录结构
 
 ```text
@@ -34,24 +31,6 @@
 2. 根据需要复制 AGENTS.md、sub-agents、slash commands 或 skills 文件
 3. 将文件放置到对应 CLI 工具的配置目录
 4. 根据个人需求调整配置
-
-## 内容说明
-
-### AGENTS.md
-
-全局约束文件，定义 AI 助手的整体行为规则和约束条件。
-
-### Sub-Agents
-
-子代理配置，用于特定任务的专门化 AI 助手。
-
-### Slash Commands
-
-自定义斜杠命令，快速执行常用操作 或 封装工作流。
-
-### Skills
-
-技能定义文件，扩展 AI 工具的功能。
 
 ## 贡献
 
