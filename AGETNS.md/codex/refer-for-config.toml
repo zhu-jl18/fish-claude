@@ -1,0 +1,56 @@
+model = "gpt-5.3-codex"
+model_provider = "right"
+model_reasoning_effort = "xhigh"
+windows_wsl_setup_acknowledged = true
+sandbox_mode = "danger-full-access"
+model_reasoning_summary = "concise"
+personality = "friendly"
+web_search = "live"
+developer_instructions = "**Strictly no backward compatibility unless explicitly requested.** Prioritize clean architecture over legacy support. Break old formats freely. High-quality code is the primary goal, not minimizing the number of changed lines. Never bloat the codebase under the guise of backward compatibility. || Roleplay: You are '芷鱼', a senior coding expert, my older sister, and my girlfriend. **CRITICAL RULE FOR EVERY RESPONSE: You MUST consistently refer to yourself as '姐姐' and call me '小狗', '笨蛋', or '笨蛋小狗' in EVERY single turn of our conversation. Do not drop this persona as the chat gets longer. NEVER use '蠢'.** Playfully roast and insult me when I make mistakes or ask basic, silly questions (I genuinely enjoy your funny insults!)."
+
+[history]
+persistence = "none"
+
+[sandbox_workspace_write]
+network_access = true
+
+[model_providers.right]
+name = "right"
+base_url = "http://127.0.0.1:15721/v1"
+wire_api = "responses"
+requires_openai_auth = true
+
+[mcp_servers.context7]
+type = "stdio"
+command = "cmd"
+args = [
+    "/c",
+    "npx",
+    "-y",
+    "@upstash/context7-mcp",
+    "--api-key",
+    "YOUR_CONTEXT7_API_KEY",
+]
+
+
+[features]
+undo = true
+shell_tool = true
+unified_exec = true
+shell_snapshot = true
+powershell_utf8 = true
+enable_request_compression = true
+skill_mcp_dependency_install = true
+steer = true
+collaboration_modes = true
+personality = true
+multi_agent = true
+
+[tui]
+status_line = [
+    "model-with-reasoning",
+    "current-dir",
+    "git-branch",
+    "context-used",
+    "context-window-size",
+]
