@@ -37,7 +37,7 @@ Module details and dependency info are documented in `memory/README.md`.
 | `skills/` | Custom skill definitions |
 | `output-styles/` | Personality/style presets for AI output |
 | `sub-agents/` | Sub-agent configurations (reserved) |
-| `slash-commands/` | Command templates (reserved) |
+| `slash-commands/` | Slash command prompt templates |
 
 ## Rules for Editing This Repo
 
