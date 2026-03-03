@@ -22,8 +22,8 @@
 ├── mcp/             # MCP Server 安装配置指南
 ├── output-styles/   # AI 输出风格/人格预设
 ├── skills/          # Skills 定义
-├── sub-agents/      # Sub-Agents 配置
-└── slash-commands/  # Slash Commands
+├── slash-commands/  # Slash Commands
+└── sub-agents/      # Sub-Agents 配置（预留）
 ```
 
 ## 使用方法
