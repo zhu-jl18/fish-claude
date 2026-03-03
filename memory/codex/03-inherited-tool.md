@@ -1,7 +1,7 @@
 ## Tool Priority
 
-- You can also use command in PowerShell on Windows so do not make low-level mistakes, for example: "cd /d X:\Toys\novel-format" fails because the `/d` syntax is for cmd, not PowerShell.
-- For semantic codebase understanding, prefer `codebase-retrieval` first; use `rg` for exact string/file matching.
+- On Windows, Codex executes shell commands via PowerShell 7 (`pwsh`) by default—use PowerShell syntax and avoid `cmd.exe`-only flags (e.g., `cd /d X:\Toys\novel-format` fails in PowerShell).
+
 - USE TOOL DIRECTLY. AVOID shell wrappers such as  `cmd /c`, `pwsh.exe -NoLogo -NoProfile -Command`, and `powershell.exe -NoLogo -NoProfile -Command` **unless necessary**. 
 
 ## Tool Orchestration (Default: Parallel)
