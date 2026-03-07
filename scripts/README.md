@@ -1,5 +1,9 @@
 # 对话历史清理脚本：设计与排查记录
 
+另见：
+
+- `migrate_codex_provider_history.py`：修复 Codex `model_provider` 变更后 chat history / resume / fork 无法正确加载的问题，说明见 `scripts/migrate_codex_provider_history.md`
+
 这份说明不是“功能列表”，而是完整的分析路径。你可以把它当成一次可复用的排障模板。
 
 ## 1. 先说结论

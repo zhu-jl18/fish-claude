@@ -14,6 +14,8 @@
 - Gemini CLI
 - Others
 
+另外也包含少量维护/迁移脚本，主要用于清理或修复各类 CLI 的本地状态与历史数据。
+
 ## 目录结构
 
 ```text
@@ -22,6 +24,7 @@
 ├── profile/         # 可直接复制使用的成品配置
 ├── mcp/             # MCP Server 安装配置指南
 ├── output-styles/   # AI 输出风格/人格预设
+├── scripts/         # 维护/迁移脚本与说明
 ├── skills/          # Skills 定义
 ├── slash-commands/  # Slash Commands
 └── sub-agents/      # Sub-Agents 配置（预留）
