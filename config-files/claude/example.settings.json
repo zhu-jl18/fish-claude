@@ -1,0 +1,25 @@
+{
+    "enabledPlugins": {
+        "code-simplifier@claude-plugins-official": true
+    },
+    "env": {
+        "ANTHROPIC_AUTH_TOKEN": "sk-your-key-here",
+        "ANTHROPIC_BASE_URL": "https://your-base-url-here.com",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5-20251001",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-6",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-opus-4-6",
+        "ANTHROPIC_MODEL": "claude-opus-4-6",
+        "ANTHROPIC_REASONING_MODEL": "claude-opus-4-6",
+        "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
+    },
+    "includeCoAuthoredBy": true,
+    "statusLine": {
+        "command": "npx ccsp@latest",
+        "type": "command"
+    },
+    "alwaysThinkingEnabled": true,
+    "attribution": {
+        "commit": "",
+        "pr": ""
+    }
+}

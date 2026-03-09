@@ -6,7 +6,7 @@
 
 ## 简介
 
-这个仓库用于分享我本人各种 Coding CLI 的自定义规则模块、成品 profile、sub-agents、slash commands 和 skills 等，包括但不限于：
+这个仓库用于分享我本人各种 Coding CLI 的项目文档规则模块、基础配置参考、sub-agents、slash commands 和 skills 等，包括但不限于：
 
 - Claude Code
 - Codex
@@ -20,22 +20,23 @@
 
 ```text
 .
-├── memory/          # 规则模块（可拼装）
-├── profile/         # 可直接复制使用的成品配置
+├── agent-instructions/ # 用于拼装 AGENTS.md / CLAUDE.md / GEMINI.md 的规则模块
+├── config-files/       # settings.json / config.toml 等基础配置参考文件
+├── system-prompts/     # 上游 system prompt 参考副本
 ├── mcp/             # MCP Server 安装配置指南
 ├── output-styles/   # AI 输出风格/人格预设
 ├── scripts/         # 维护/迁移脚本与说明
 ├── skills/          # Skills 定义
 ├── slash-commands/  # Slash Commands
-└── sub-agents/      # Sub-Agents 配置（预留）
+└── sub-agents/      # Sub-Agent role layer 与示例
 ```
 
 ## 使用方法
 
 1. 克隆仓库到本地
-2. 根据需要选用 `memory/` 中的模块，或直接复制 `profile/` 下的成品配置
-3. 将文件放置到对应 CLI 工具的配置目录
-4. 根据个人需求调整配置
+2. 从 `agent-instructions/` 中挑选模块，拼装你的 `AGENTS.md` / `CLAUDE.md` / `GEMINI.md`
+3. 参考 `config-files/` 中的 `settings.json` / `config.toml` 样例，填写模型、provider、认证和运行权限等基础设置
+4. 将文件放置到对应 CLI 工具的配置目录，并按个人需求继续调整
 
 ## 贡献
 

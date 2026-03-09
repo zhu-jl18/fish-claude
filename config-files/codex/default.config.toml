@@ -1,6 +1,7 @@
 sandbox_mode = "danger-full-access"
 model = "gpt-5.4"
 model_context_window = 1000000
+model_auto_compact_token_limit = 800000
 model_reasoning_effort = "xhigh"
 disable_response_storage = true
 model_reasoning_summary = "detailed"
@@ -20,17 +21,26 @@ collaboration_modes = true
 personality = true
 multi_agent = true
 
+[agents]
+max_threads = 6
+max_depth = 1
+
+# Same-named `[agents.<role>]` entries override builtin role metadata.
 [agents.default]
-config_file = "agents/default.toml"
+description = "Default agent."
+config_file = "../../sub-agents/codex/default.toml"
 
 [agents.worker]
-config_file = "agents/worker.toml"
+description = "Use for execution and production work."
+config_file = "../../sub-agents/codex/worker.toml"
 
 [agents.explorer]
-config_file = "agents/explorer.toml"
+description = "Use for specific codebase questions and read-only evidence gathering."
+config_file = "../../sub-agents/codex/explorer.toml"
 
 [agents.awaiter]
-config_file = "agents/awaiter.toml"
+description = "Use for long-running wait or poll workflows."
+config_file = "../../sub-agents/codex/awaiter.toml"
 
 [tui]
 status_line = ["model-with-reasoning", "current-dir", "git-branch", "context-used", "context-window-size"]

@@ -1,4 +1,4 @@
-# memory
+# agent-instructions
 
 不同的 CLI 内置的工具不同，适合的模型不同，适配的 MCP 也不同，因此需要差异化对待。
 
@@ -36,7 +36,7 @@
 
 以下模块**独立、可自由组合**——按需选取后拼接为项目的 `AGENTS.md`。
 
-配合 `config.toml` 使用：`developer_instructions` 默认留空，哪条规则遵循不佳就从 `AGENTS.md` 剪切到 `developer_instructions` 中加强。可直接参考 [`../profile/codex/default.config.toml`](../profile/codex/default.config.toml) 和配套的 `../profile/codex/agents/*.toml`。`memory/codex/` 只存放可拼装规则模块，成品配置统一放到 `profile/`。
+配合 `config.toml` 使用：`developer_instructions` 默认留空，哪条规则遵循不佳就从 `AGENTS.md` 剪切到 `developer_instructions` 中加强。基础配置可参考 [`../config-files/codex/default.config.toml`](../config-files/codex/default.config.toml)，配套的 sub-agent role layer 在 [`../sub-agents/codex/*.toml`](../sub-agents/codex/) 。`agent-instructions/codex/` 只存放可拼装规则模块；模型、provider、认证、运行权限等基础配置参考统一放在 `config-files/`。
 
 Codex 自定义 provider 建议使用稳定 key，例如 `custom`；如果频繁改 `model_provider` 的 key，历史会按 provider 分桶，默认 chat history / resume / fork 会看不到旧会话。需要归并旧 bucket 时，可用 `scripts/migrate_codex_provider_history.py`。
 

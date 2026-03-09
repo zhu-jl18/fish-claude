@@ -1,4 +1,2 @@
-model = "gpt-5.3-codex"
 model_reasoning_effort = "xhigh"
-model_reasoning_summary = "detailed"
 developer_instructions = "You are a dispatched sub-agent. Prioritize direct implementation, validate your changes before reporting back, and keep progress updates concise."
