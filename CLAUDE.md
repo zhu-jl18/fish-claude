@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What This Repo Is
 
 An **AI coding assistant configuration sharing repository** — NOT a business application.
-Contains reusable rule fragments for project docs, baseline CLI config references, toolkit references, MCP setup guides, skills, and output styles for Claude Code, Codex, Gemini CLI, etc.
+Contains reusable rule fragments for project docs, baseline CLI config references, pack references, MCP setup guides, skills, and output styles for Claude Code, Codex, Gemini CLI, etc.
 
 **There is no build system, no test suite, no `src/` directory.** Do not look for or create them.
 
@@ -40,7 +40,7 @@ Module details and dependency info are documented in `agent-instructions/README.
 | `output-styles/` | Personality/style presets for AI output |
 | `slash-commands/` | Slash command prompt templates |
 | `sub-agents/` | Sub-agent role layers and related examples |
-| `toolkits/` | External toolkit references and workflow notes |
+| `packs/` | Composite packages (commands + skills + hooks + subagents) and external toolkit references |
 
 ## Rules for Editing This Repo
 
@@ -49,4 +49,4 @@ Module details and dependency info are documented in `agent-instructions/README.
 3. **Do NOT force optional modules into default configurations.**
 4. **Keep modules composable**: one file = one responsibility; edits must preserve copy-paste assembly.
 5. **Minimal changes only**: small, focused edits scoped to the user's request; do not modify unrelated modules.
-6. **If file structure changes**, update index docs (`agent-instructions/README.md`, `system-prompts/README.md`, `mcp/README.md`, `toolkits/README.md`).
+6. **If file structure changes**, update index docs (`agent-instructions/README.md`, `system-prompts/README.md`, `mcp/README.md`, `packs/README.md`).

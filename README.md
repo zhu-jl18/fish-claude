@@ -12,7 +12,7 @@
 
 ## 简介
 
-这个仓库用于分享我本人各种 Coding CLI 的项目文档规则模块、基础配置参考、toolkits、sub-agents、slash commands 和 skills 等，包括但不限于：
+这个仓库用于分享我本人各种 Coding CLI 的项目文档规则模块、基础配置参考、packs、sub-agents、slash commands 和 skills 等，包括但不限于：
 
 - Claude Code
 - Codex
@@ -35,7 +35,7 @@
 ├── skills/          # Skills 定义
 ├── slash-commands/  # Slash Commands
 ├── sub-agents/      # Sub-Agent role layer 与示例
-└── toolkits/        # 外部工具集与工作流参考
+└── packs/           # 组合包与外部工具集参考
 ```
 
 ## 使用方法

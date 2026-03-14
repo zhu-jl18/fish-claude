@@ -1,6 +1,6 @@
 # code-dispatcher-toolkit
 
-外部 toolkit 参考页。
+外部 pack 参考页。
 
 ## 来源
 

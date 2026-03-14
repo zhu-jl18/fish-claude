@@ -22,7 +22,7 @@
 | 04  | [git](claude/04-git.md)                       | Git 工作流、提交规范、账号身份         | `gh` CLI                                                          |
 | 05  | [environment](claude/05-environment.md)       | OS / Shell / Python 环境配置           | —                                                                 |
 | 06  | [priority-stack](claude/06-priority-stack.md) | 优先级堆栈（最高级行为约束）           | —                                                                 |
-| 07  | [dev-workflow](claude/07-dev-workflow.md)     | code-dispatcher 开发工作流（按需启用） | [code-dispatcher-toolkit](../toolkits/code-dispatcher-toolkit.md) |
+| 07  | [dev-workflow](claude/07-dev-workflow.md)     | code-dispatcher 开发工作流（按需启用） | [code-dispatcher-toolkit](../packs/code-dispatcher-toolkit.md) |
 | 08  | [serena](claude/08-serena.md)                 | Serena MCP 语义检索规则（按需启用）    | [Serena](../mcp/serena.md)                                        |
 | 09  | [playwright](claude/09-playwright.md)         | Playwright UI 验证规则（按需启用）     | [Playwright](../mcp/playwright.md)                                |
 | 10  | [agent-teams](claude/10-agent-teams.md)       | Agent Teams 使用规范（按需启用）       | —                                                                 |
