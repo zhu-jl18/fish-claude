@@ -1,5 +1,11 @@
 # system-prompts
 
+## Claude Code
+
+- source remote: `https://github.com/Piebald-AI/claude-code-system-prompts`
+- prompts index: `https://github.com/Piebald-AI/claude-code-system-prompts/tree/main/system-prompts`
+- note: Claude Code prompt pieces change frequently and are better referenced directly from the upstream categorized mirror
+
 ## Codex CLI
 
 - file: `codex-cli.md`

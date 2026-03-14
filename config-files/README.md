@@ -1,6 +1,6 @@
 # config-files
 
-这里存放各 CLI 的基础配置参考文件，而不是 `agent-instructions/` 里的可拼装规则模块。
+这里存放各 CLI 的基础配置参考文件。
 
 ## Claude
 

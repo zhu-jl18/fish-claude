@@ -1,12 +1,18 @@
-# Fish Claude
+<div align="center">
+
+<h1>Fish Claude</h1>
+
+**Fish's Coding Agent Configs**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 ![GitHub stars](https://img.shields.io/github/stars/zhu-jl18/fish-claude?style=social)
 
+</div>
+
 ## 简介
 
-这个仓库用于分享我本人各种 Coding CLI 的项目文档规则模块、基础配置参考、sub-agents、slash commands 和 skills 等，包括但不限于：
+这个仓库用于分享我本人各种 Coding CLI 的项目文档规则模块、基础配置参考、toolkits、sub-agents、slash commands 和 skills 等，包括但不限于：
 
 - Claude Code
 - Codex
@@ -28,7 +34,8 @@
 ├── scripts/         # 维护/迁移脚本与说明
 ├── skills/          # Skills 定义
 ├── slash-commands/  # Slash Commands
-└── sub-agents/      # Sub-Agent role layer 与示例
+├── sub-agents/      # Sub-Agent role layer 与示例
+└── toolkits/        # 外部工具集与工作流参考
 ```
 
 ## 使用方法
