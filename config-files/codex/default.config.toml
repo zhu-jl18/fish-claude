@@ -28,29 +28,42 @@ max_depth = 1
 # Same-named `[agents.<role>]` entries override builtin role metadata.
 [agents.default]
 description = "Default agent."
-config_file = "../../sub-agents/codex/default.toml"
+config_file = "agents/default.toml"
 
 [agents.worker]
 description = "Use for execution and production work."
-config_file = "../../sub-agents/codex/worker.toml"
+config_file = "agents/worker.toml"
 
 [agents.explorer]
 description = "Use for specific codebase questions and read-only evidence gathering."
-config_file = "../../sub-agents/codex/explorer.toml"
+config_file = "agents/explorer.toml"
 
 [agents.awaiter]
 description = "Use for long-running wait or poll workflows."
-config_file = "../../sub-agents/codex/awaiter.toml"
+config_file = "agents/awaiter.toml"
 
 [tui]
-status_line = ["model-with-reasoning", "current-dir", "git-branch", "context-used", "context-window-size"]
+status_line = [
+    "model-with-reasoning",
+    "current-dir",
+    "git-branch",
+    "context-used",
+    "context-window-size",
+]
 
 [mcp_servers]
 
 [mcp_servers.context7]
 type = "stdio"
 command = "cmd"
-args = ["/c", "npx", "-y", "@upstash/context7-mcp", "--api-key", "YOUR_CONTEXT7_API_KEY"]
+args = [
+    "/c",
+    "npx",
+    "-y",
+    "@upstash/context7-mcp",
+    "--api-key",
+    "YOUR_CONTEXT7_API_KEY",
+]
 
 [notice.model_migrations]
 "gpt-5.2" = "gpt-5.3-codex"
