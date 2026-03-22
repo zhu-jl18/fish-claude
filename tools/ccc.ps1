@@ -2,7 +2,7 @@
 # Lists settings* files in the current user's Claude config directory,
 # then launches claude with --dangerously-skip-permissions using the selected file.
 #
-# Usage:  . scripts/ccc.ps1   (dot-source to get the function into your session)
+# Usage:  . tools/ccc.ps1     (dot-source to get the function into your session)
 #         ccc                  (then follow the prompts)
 
 function ccc {

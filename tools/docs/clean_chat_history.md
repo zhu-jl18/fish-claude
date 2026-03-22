@@ -121,7 +121,7 @@ execute + summary
 
 ## 验证方式
 
-1. 语法检查：`python -m py_compile scripts/clean_chat_history.py`
+1. 语法检查：`python -m py_compile tools/clean_chat_history.py`
 2. 流程检查：验证交互输入有效和无效路径
 3. 安全检查：预览后取消，不触发删除
 4. 结果检查：删除后反查 DB 条数和缓存文件数
@@ -130,7 +130,7 @@ execute + summary
 ## 使用方式
 
 ```bash
-python scripts/clean_chat_history.py
+python tools/clean_chat_history.py
 ```
 
 建议：

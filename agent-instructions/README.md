@@ -38,7 +38,7 @@
 | 03  | [inherited-tool](codex/03-inherited-tool.md)       | 工具优先级与并行编排                     | —                                                               |
 | 04  | [role-play-sm](codex/04-role-play-sm.md)           | 角色扮演人设                             | —                                                               |
 | 05  | [debug-first](codex/05-debug-first.md)             | 调试策略（禁止静默兜底）                 | —                                                               |
-| 06  | [multi-agent](codex/06-multi-agent.md)             | 多智能体协作规范                         | [multi-agent = true](../config-files/codex/default.config.toml) |
+| 06  | [multi-agent](codex/06-multi-agent.md)             | 多智能体协作规范                         | 默认开启；显式配置见 [default.config.toml](../config-files/codex/default.config.toml) |
 | 07  | [no-compat](codex/07-no-compat.md)                 | 禁止向后兼容（优先干净架构）             | —                                                               |
 
 ## Gemini

@@ -1,7 +1,7 @@
 # Local configuration files
 .claude/
 desktop.ini
-
+.vscode/
 # Windows system files
 Thumbs.db
 *.lnk

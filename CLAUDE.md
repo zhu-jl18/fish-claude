@@ -29,18 +29,18 @@ Module details and dependency info are documented in `agent-instructions/README.
 
 ### Directory Layout
 
-| Directory | Purpose |
-|---|---|
-| `agent-instructions/claude/` | Claude Code rule modules (composable fragments) |
-| `agent-instructions/codex/` | Codex rule modules |
-| `config-files/` | Baseline CLI config references (`settings.json`, `config.toml`, etc.) |
-| `system-prompts/` | Upstream system prompt references |
-| `mcp/` | MCP server installation & usage guides |
-| `skills/` | Custom skill definitions |
-| `output-styles/` | Personality/style presets for AI output |
-| `slash-commands/` | Slash command prompt templates |
-| `sub-agents/` | Sub-agent role layers and related examples |
-| `packs/` | Composite packages (commands + skills + hooks + subagents) and external toolkit references |
+| Directory                    | Purpose                                                                                    |
+| ---------------------------- | ------------------------------------------------------------------------------------------ |
+| `agent-instructions/claude/` | Claude Code rule modules (composable fragments)                                            |
+| `agent-instructions/codex/`  | Codex rule modules                                                                         |
+| `config-files/`              | Baseline CLI config references (`settings.json`, `config.toml`, etc.)                      |
+| `system-prompts/`            | Upstream system prompt references                                                          |
+| `mcp/`                       | MCP server installation & usage guides                                                     |
+| `skills/`                    | Custom skill definitions                                                                   |
+| `output-styles/`             | Personality/style presets for AI output                                                    |
+| `slash-commands/`            | Slash command prompt templates                                                             |
+| `sub-agents/`                | Sub-agent role layers and related examples                                                 |
+| `packs/`                     | Composite packages (commands + skills + hooks + subagents) and external toolkit references |
 
 ## Rules for Editing This Repo
 
@@ -50,3 +50,15 @@ Module details and dependency info are documented in `agent-instructions/README.
 4. **Keep modules composable**: one file = one responsibility; edits must preserve copy-paste assembly.
 5. **Minimal changes only**: small, focused edits scoped to the user's request; do not modify unrelated modules.
 6. **If file structure changes**, update index docs (`agent-instructions/README.md`, `system-prompts/README.md`, `mcp/README.md`, `packs/README.md`).
+
+# Git Commit Message Format
+
+Use conventional commits format:
+
+```
+<type>(<scope>): <subject>
+<body>
+<footer>
+```
+
+<type> and <subject> are required; <body> and <footer> are optional.

@@ -28,7 +28,7 @@ Codex 的 chat history / resume / fork 并不是"只看会话文件是否还在"
 
 ## 2. 这个脚本解决什么问题
 
-脚本文件：`scripts/migrate_codex_provider_history.py`
+工具文件：`tools/migrate_codex_provider_history.py`
 
 它解决的是这类场景：
 
@@ -88,12 +88,12 @@ requires_openai_auth = true
 
 **Bash:**
 ```bash
-python scripts/migrate_codex_provider_history.py
+python tools/migrate_codex_provider_history.py
 ```
 
 **PowerShell:**
 ```powershell
-python scripts/migrate_codex_provider_history.py
+python tools/migrate_codex_provider_history.py
 ```
 
 默认行为：
@@ -107,48 +107,48 @@ python scripts/migrate_codex_provider_history.py
 
 **Bash:**
 ```bash
-python scripts/migrate_codex_provider_history.py --apply
+python tools/migrate_codex_provider_history.py --apply
 ```
 
 **PowerShell:**
 ```powershell
-python scripts/migrate_codex_provider_history.py --apply
+python tools/migrate_codex_provider_history.py --apply
 ```
 
 ### 5.3 迁移前先做备份
 
 **Bash:**
 ```bash
-python scripts/migrate_codex_provider_history.py --apply --backup-dir "/mnt/d/temp/codex-provider-backup"
+python tools/migrate_codex_provider_history.py --apply --backup-dir "/mnt/d/temp/codex-provider-backup"
 ```
 
 **PowerShell:**
 ```powershell
-python scripts/migrate_codex_provider_history.py --apply --backup-dir "D:/temp/codex-provider-backup"
+python tools/migrate_codex_provider_history.py --apply --backup-dir "D:/temp/codex-provider-backup"
 ```
 
 ### 5.4 指定 Codex Home
 
 **Bash:**
 ```bash
-python scripts/migrate_codex_provider_history.py --codex-home "/mnt/d/portable/codex-home" --apply
+python tools/migrate_codex_provider_history.py --codex-home "/mnt/d/portable/codex-home" --apply
 ```
 
 **PowerShell:**
 ```powershell
-python scripts/migrate_codex_provider_history.py --codex-home "D:/portable/codex-home" --apply
+python tools/migrate_codex_provider_history.py --codex-home "D:/portable/codex-home" --apply
 ```
 
 ### 5.5 保留更多 provider，不并到 custom
 
 **Bash:**
 ```bash
-python scripts/migrate_codex_provider_history.py --keep-provider openai --keep-provider custom --keep-provider oss
+python tools/migrate_codex_provider_history.py --keep-provider openai --keep-provider custom --keep-provider oss
 ```
 
 **PowerShell:**
 ```powershell
-python scripts/migrate_codex_provider_history.py --keep-provider openai --keep-provider custom --keep-provider oss
+python tools/migrate_codex_provider_history.py --keep-provider openai --keep-provider custom --keep-provider oss
 ```
 
 ---
