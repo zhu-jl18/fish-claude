@@ -8,6 +8,8 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 ![GitHub stars](https://img.shields.io/github/stars/zhu-jl18/fish-claude?style=social)
 
+[English](README.en.md) | 中文
+
 </div>
 
 ## 简介
@@ -35,7 +37,8 @@
 ├── skills/          # Skills 定义
 ├── slash-commands/  # Slash Commands
 ├── sub-agents/      # Sub-Agent role layer 与示例
-└── packs/           # 组合包与外部工具集参考
+├── packs/           # 组合包与外部工具集参考
+└── ai-services/     # 常与 AI 工作流配合使用的外部 API 服务参考
 ```
 
 ## 使用方法

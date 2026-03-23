@@ -1,5 +1,6 @@
 # Local configuration files
 .claude/
+.harness/
 desktop.ini
 .vscode/
 # Windows system files

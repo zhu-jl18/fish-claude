@@ -6,3 +6,4 @@
 | --- | --- | --- | --- |
 | [UI UX Pro Max](ui-ux-pro-max.md) | `nextlevelbuilder/ui-ux-pro-max-skill` | Claude Code / Codex / Gemini CLI | 社区常用的 UI/UX design intelligence skill，适合把设计系统、风格选择和前端实现约束一起交给 agent |
 | [Grok Search](grok-search.md) | `abelxiaoxing/agent-toolkit` | Claude Code | 用 Grok API + Tavily 替代内置 WebSearch/WebFetch 的 CLI skill，支持 Windows / Linux / macOS |
+| [Sync Readme](sync-readme.md) | `Li-ionFractalNanocore/cc-wrap` | Claude Code / Codex / Gemini CLI | 多语言 README 同步 skill：识别最新版本并翻译/同步其他 README 文件 |

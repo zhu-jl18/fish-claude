@@ -7,6 +7,7 @@ disable_response_storage = true
 model_reasoning_summary = "detailed"
 network_access = true
 service_tier = "fast"
+developer_instructions = "Minimize fault tolerance and avoid fallback mechanisms."
 
 [features]
 undo = true
@@ -39,6 +40,10 @@ config_file = "agents/worker.toml"
 [agents.explorer]
 description = "Use for specific codebase questions and read-only evidence gathering."
 config_file = "agents/explorer.toml"
+
+[agents.spark]
+description = "Use for low-context, speed-first, text-only repo reading, targeted evidence gathering, and simple bounded tasks within Spark's 128k context. Avoid broad multi-file exploration or multimodal work."
+config_file = "agents/spark.toml"
 
 [agents.awaiter]
 description = "Use for long-running wait or poll workflows."

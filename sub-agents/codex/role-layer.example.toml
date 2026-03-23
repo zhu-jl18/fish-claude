@@ -11,10 +11,6 @@
 #   and `cwd`, so those are usually not worth putting here.
 
 model_reasoning_effort = "xhigh"
-service_tier = "fast"
-
-[features]
-fast_mode = true
 
 # Common optional overrides:
 # model_reasoning_summary = "detailed"
