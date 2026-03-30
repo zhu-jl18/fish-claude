@@ -9,7 +9,6 @@
 | Claude Code | `~/.claude/CLAUDE.md`          |
 | Codex       | `~/.codex/AGENTS.md`           |
 | Gemini CLI  | `~/.gemini/GEMINI.md`          |
-| OpenCode    | `~/.config/opencode/AGENTS.md` |
 | AmpCode     | `~/.config/amp/AGENTS.md`      |
 
 ## Claude Code

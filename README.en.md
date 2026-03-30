@@ -18,9 +18,10 @@ This repository shares my personal rule modules, baseline config references, pac
 
 - Claude Code
 - Codex
-- OpenCode
 - Gemini CLI
 - Others
+
+opencode is shit.
 
 It also includes a small set of maintenance/migration tools, primarily for cleaning up or repairing local state and history data across these CLIs.
 

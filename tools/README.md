@@ -13,7 +13,7 @@ ccc
 
 ## Python
 
-- `clean_chat_history.py`：多 CLI 对话历史清理（Claude Code / Codex / OpenCode / Gemini CLI）
+- `clean_chat_history.py`：多 CLI 对话历史清理（Claude Code / Codex / Gemini CLI）
   说明见 `tools/docs/clean_chat_history.md`
 - `migrate_codex_provider_history.py`：修复 Codex `model_provider` 变更后 chat history / resume / fork 无法正确加载
   说明见 `tools/docs/migrate_codex_provider_history.md`
