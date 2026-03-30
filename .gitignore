@@ -10,3 +10,6 @@ Thumbs.db
 # Python caches
 __pycache__/
 *.pyc
+
+# Sisyphus orchestration state
+.sisyphus/

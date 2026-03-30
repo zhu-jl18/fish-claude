@@ -2,10 +2,6 @@
 from __future__ import annotations
 
 import json
-import os
-import shutil
-import sqlite3
-import subprocess
 import sys
 import tempfile
 from collections.abc import Callable
@@ -17,9 +13,8 @@ from pathlib import Path
 CLI_MENU = {
     "1": ("claude", "Claude Code"),
     "2": ("codex", "Codex"),
-    "3": ("opencode", "OpenCode"),
-    "4": ("gemini", "Gemini CLI"),
-    "5": ("all", "全部"),
+    "3": ("gemini", "Gemini CLI"),
+    "4": ("all", "全部"),
 }
 
 DAYS_MENU = {
@@ -41,20 +36,11 @@ class JsonlPrunePlan:
 
 
 @dataclass
-class OpenCodeSessionPlan:
-    session_id: str
-    updated_ms: int
-
-
-@dataclass
 class CliCleanupPlan:
     key: str
     label: str
     file_deletes: list[tuple[Path, Path]] = field(default_factory=list)
     jsonl_prunes: list[JsonlPrunePlan] = field(default_factory=list)
-    opencode_sessions: list[OpenCodeSessionPlan] = field(default_factory=list)
-    opencode_db_path: Path | None = None
-    opencode_storage_path: Path | None = None
     notes: list[str] = field(default_factory=list)
 
 
@@ -62,33 +48,13 @@ def print_header(text: str) -> None:
     print(f"\n=== {text} ===")
 
 
-def is_wsl() -> bool:
-    if sys.platform != "linux":
-        return False
-    if os.environ.get("WSL_INTEROP") or os.environ.get("WSL_DISTRO_NAME"):
-        return True
-    try:
-        content = Path("/proc/version").read_text(encoding="utf-8", errors="ignore").lower()
-        return "microsoft" in content or "wsl" in content
-    except OSError:
-        return False
-
-
-def xdg_dir(env_key: str, default_relative: str) -> Path:
-    value = os.environ.get(env_key)
-    if value:
-        return Path(value).expanduser()
-    return Path.home() / default_relative
-
-
 def prompt_cli_selection() -> list[str]:
     while True:
         print_header("选择要清理的 Agent CLI")
         print("1. Claude Code")
         print("2. Codex")
-        print("3. OpenCode")
-        print("4. Gemini CLI")
-        print("5. 全部")
+        print("3. Gemini CLI")
+        print("4. 全部")
         print("0. 取消")
         raw = input("请输入编号（可多选，逗号分隔，如 1,3）: ").strip()
 
@@ -99,13 +65,13 @@ def prompt_cli_selection() -> list[str]:
         if not tokens:
             continue
 
-        if "5" in tokens:
-            return ["claude", "codex", "opencode", "gemini"]
+        if "4" in tokens:
+            return ["claude", "codex", "gemini"]
 
         selected: list[str] = []
         ok = True
         for token in tokens:
-            if token not in CLI_MENU or token == "5":
+            if token not in CLI_MENU or token == "4":
                 ok = False
                 break
             cli_key = CLI_MENU[token][0]
@@ -214,23 +180,6 @@ def is_old_jsonl_record(data: dict, timestamp_keys: tuple[str, ...], cutoff: flo
     return False
 
 
-def validate_opencode_session_id_format(db_session_ids: set[str], storage_session_ids: set[str]) -> None:
-    bad_db = sorted([sid for sid in db_session_ids if not sid.startswith("ses_")])
-    bad_storage = sorted([sid for sid in storage_session_ids if not sid.startswith("ses_")])
-    if bad_storage:
-        examples = ", ".join(bad_storage[:5])
-        raise RuntimeError(
-            "Unsupported OpenCode storage session id format (expected prefix 'ses_'). "
-            f"Examples: {examples}"
-        )
-    if bad_db:
-        examples = ", ".join(bad_db[:5])
-        raise RuntimeError(
-            "Unsupported OpenCode DB session.id format (expected prefix 'ses_'). "
-            f"Examples: {examples}"
-        )
-
-
 def preview_jsonl_prune(path: Path, timestamp_keys: tuple[str, ...], unit: str, cutoff_epoch_s: float) -> tuple[int, int]:
     if not path.exists():
         return (0, 0)
@@ -314,139 +263,6 @@ def cleanup_empty_parents(start: Path, stop_root: Path) -> None:
             break
 
 
-def run_command(args: list[str]) -> subprocess.CompletedProcess[str]:
-    resolved = shutil.which(args[0])
-    if resolved is None:
-        raise FileNotFoundError(f"Command not found: {args[0]}")
-
-    final_args: list[str]
-    suffix = Path(resolved).suffix.lower()
-    if os.name != "nt" and suffix in {".cmd", ".bat", ".ps1", ".exe"}:
-        env_name = "WSL" if is_wsl() else sys.platform
-        raise RuntimeError(
-            f"Detected Windows shim for '{args[0]}' in {env_name}: {resolved}. "
-            "Install the native CLI in this environment or adjust PATH."
-        )
-    if os.name == "nt" and suffix in {".cmd", ".bat"}:
-        comspec = os.environ.get("COMSPEC", "cmd.exe")
-        final_args = [comspec, "/c", resolved, *args[1:]]
-    elif os.name == "nt" and suffix == ".ps1":
-        final_args = ["pwsh", "-NoLogo", "-NoProfile", "-File", resolved, *args[1:]]
-    else:
-        final_args = [resolved, *args[1:]]
-
-    return subprocess.run(final_args, text=True, capture_output=True, check=False)
-
-
-def discover_opencode_paths() -> dict[str, Path]:
-    data_home = xdg_dir("XDG_DATA_HOME", os.path.join(".local", "share"))
-    state_home = xdg_dir("XDG_STATE_HOME", os.path.join(".local", "state"))
-    config_home = xdg_dir("XDG_CONFIG_HOME", ".config")
-    defaults = {
-        "data": data_home / "opencode",
-        "state": state_home / "opencode",
-        "config": config_home / "opencode",
-    }
-    if shutil.which("opencode") is None:
-        return defaults
-
-    proc = run_command(["opencode", "debug", "paths"])
-    if proc.returncode != 0:
-        return defaults
-
-    parsed = dict(defaults)
-    for line in proc.stdout.splitlines():
-        stripped = line.strip()
-        if not stripped:
-            continue
-        parts = stripped.split(None, 1)
-        if len(parts) != 2:
-            continue
-        key, value = parts
-        if key in {"data", "state", "config", "cache", "log", "home", "bin"}:
-            parsed[key] = Path(value.strip())
-    return parsed
-
-
-def resolve_opencode_db_path(paths: dict[str, Path]) -> Path:
-    data_dir = paths.get("data", xdg_dir("XDG_DATA_HOME", os.path.join(".local", "share")) / "opencode")
-    return data_dir / "opencode.db"
-
-
-def resolve_opencode_storage_path(paths: dict[str, Path]) -> Path:
-    data_dir = paths.get("data", xdg_dir("XDG_DATA_HOME", os.path.join(".local", "share")) / "opencode")
-    return data_dir / "storage"
-
-
-def query_opencode_old_sessions(db_path: Path, cutoff_epoch_ms: int) -> tuple[list[OpenCodeSessionPlan], str | None]:
-    if not db_path.exists():
-        return ([], f"未找到 OpenCode 数据库: {db_path}")
-
-    try:
-        with sqlite3.connect(db_path) as conn:
-            rows = conn.execute(
-                "select id, time_updated from session where time_updated < ? order by time_updated asc",
-                (cutoff_epoch_ms,),
-            ).fetchall()
-    except sqlite3.Error as e:
-        return ([], f"查询 OpenCode 数据库失败: {e}")
-
-    sessions = [OpenCodeSessionPlan(session_id=str(row[0]).strip(), updated_ms=int(row[1])) for row in rows]
-    return (sessions, None)
-
-
-def delete_opencode_old_sessions(db_path: Path, cutoff_epoch_ms: int) -> tuple[int, str | None]:
-    if not db_path.exists():
-        return (0, f"未找到 OpenCode 数据库: {db_path}")
-
-    try:
-        with sqlite3.connect(db_path) as conn:
-            conn.execute("PRAGMA foreign_keys = ON")
-            cur = conn.execute("delete from session where time_updated < ?", (cutoff_epoch_ms,))
-            conn.commit()
-            return (cur.rowcount if cur.rowcount is not None else 0, None)
-    except sqlite3.Error as e:
-        return (0, f"删除 OpenCode 会话失败: {e}")
-
-
-def query_opencode_old_sessions_from_storage(storage_root: Path, cutoff_epoch_ms: int) -> tuple[dict[str, int], str | None]:
-    sessions_root = storage_root / "session"
-    if not sessions_root.exists():
-        return ({}, f"未找到 OpenCode storage 会话目录: {sessions_root}")
-
-    result: dict[str, int] = {}
-    for file_path in sessions_root.rglob("ses_*.json"):
-        if not file_path.is_file():
-            continue
-        session_id = file_path.stem
-        updated_ms: int | None = None
-        try:
-            with file_path.open("r", encoding="utf-8") as f:
-                payload = json.load(f)
-            if isinstance(payload, dict):
-                time_obj = payload.get("time")
-                if isinstance(time_obj, dict):
-                    raw = time_obj.get("updated")
-                    ts = resolve_numeric_timestamp(raw)
-                    if ts is not None:
-                        updated_ms = int(ts)
-        except (OSError, json.JSONDecodeError):
-            updated_ms = None
-
-        if updated_ms is None:
-            try:
-                updated_ms = int(file_path.stat().st_mtime * 1000)
-            except OSError:
-                continue
-
-        if updated_ms < cutoff_epoch_ms:
-            current = result.get(session_id)
-            if current is None or updated_ms < current:
-                result[session_id] = updated_ms
-
-    return (result, None)
-
-
 def collect_files_in_dir(root: Path, directory: Path) -> list[tuple[Path, Path]]:
     collected: list[tuple[Path, Path]] = []
     if not directory.exists():
@@ -455,59 +271,6 @@ def collect_files_in_dir(root: Path, directory: Path) -> list[tuple[Path, Path]]
         if file_path.is_file():
             collected.append((file_path, root))
     return collected
-
-
-def collect_opencode_storage_cleanup_files(storage_root: Path, session_ids: set[str]) -> list[tuple[Path, Path]]:
-    if not session_ids:
-        return []
-
-    session_root = storage_root / "session"
-    session_diff_root = storage_root / "session_diff"
-    todo_root = storage_root / "todo"
-    message_root = storage_root / "message"
-    part_root = storage_root / "part"
-
-    files: list[tuple[Path, Path]] = []
-    files.extend(
-        collect_files_filtered(
-            session_root,
-            include_file=lambda p, _root: p.stem in session_ids,
-            cutoff_epoch_s=None,
-        )
-    )
-    files.extend(
-        collect_files_filtered(
-            session_diff_root,
-            include_file=lambda p, _root: p.stem in session_ids,
-            cutoff_epoch_s=None,
-        )
-    )
-    files.extend(
-        collect_files_filtered(
-            todo_root,
-            include_file=lambda p, _root: p.stem in session_ids,
-            cutoff_epoch_s=None,
-        )
-    )
-
-    message_ids: set[str] = set()
-    for session_id in session_ids:
-        session_message_dir = message_root / session_id
-        if session_message_dir.exists():
-            files.extend(collect_files_in_dir(message_root, session_message_dir))
-            for item in session_message_dir.glob("msg_*.json"):
-                if item.is_file():
-                    message_ids.add(item.stem)
-
-    for message_id in message_ids:
-        message_part_dir = part_root / message_id
-        if message_part_dir.exists():
-            files.extend(collect_files_in_dir(part_root, message_part_dir))
-
-    dedup: dict[str, tuple[Path, Path]] = {}
-    for fp, root in files:
-        dedup[str(fp).lower()] = (fp, root)
-    return sorted(dedup.values(), key=lambda x: str(x[0]).lower())
 
 
 def build_claude_plan(cutoff_epoch_s: float) -> CliCleanupPlan:
@@ -566,58 +329,6 @@ def build_codex_plan(cutoff_epoch_s: float) -> CliCleanupPlan:
     return plan
 
 
-def build_opencode_plan(cutoff_epoch_s: float) -> CliCleanupPlan:
-    plan = CliCleanupPlan(key="opencode", label="OpenCode")
-    paths = discover_opencode_paths()
-    data_path = paths.get("data")
-    state_path = paths.get("state")
-    config_path = paths.get("config")
-
-    if data_path is not None:
-        plan.notes.append(f"检测数据目录: {data_path}")
-    if state_path is not None:
-        plan.notes.append(f"检测状态目录: {state_path}")
-    if config_path is not None:
-        plan.notes.append(f"检测配置目录: {config_path}")
-
-    db_path = resolve_opencode_db_path(paths)
-    storage_path = resolve_opencode_storage_path(paths)
-    plan.opencode_db_path = db_path
-    plan.opencode_storage_path = storage_path
-    plan.notes.append(f"检测数据库: {db_path}")
-    plan.notes.append(f"检测 storage: {storage_path}")
-
-    cutoff_ms = int(cutoff_epoch_s * 1000)
-    sessions, err = query_opencode_old_sessions(db_path, cutoff_ms)
-    if err:
-        plan.notes.append(err)
-
-    storage_sessions, storage_err = query_opencode_old_sessions_from_storage(storage_path, cutoff_ms)
-    if storage_err:
-        plan.notes.append(storage_err)
-
-    db_session_ids = {item.session_id for item in sessions}
-    storage_session_ids = set(storage_sessions.keys())
-    validate_opencode_session_id_format(db_session_ids, storage_session_ids)
-
-    session_map: dict[str, int] = {item.session_id: item.updated_ms for item in sessions}
-    for session_id, updated_ms in storage_sessions.items():
-        existing = session_map.get(session_id)
-        if existing is None or updated_ms < existing:
-            session_map[session_id] = updated_ms
-
-    plan.opencode_sessions.extend(
-        [
-            OpenCodeSessionPlan(session_id=sid, updated_ms=updated)
-            for sid, updated in sorted(session_map.items(), key=lambda x: x[1])
-        ]
-    )
-
-    session_ids = {item.session_id for item in plan.opencode_sessions}
-    plan.file_deletes.extend(collect_opencode_storage_cleanup_files(storage_path, session_ids))
-    return plan
-
-
 def build_gemini_plan(cutoff_epoch_s: float) -> CliCleanupPlan:
     plan = CliCleanupPlan(key="gemini", label="Gemini CLI")
     gemini_root = Path.home() / ".gemini"
@@ -659,8 +370,6 @@ def print_plan_summary(plans: list[CliCleanupPlan], cutoff: datetime) -> None:
     total_files = 0
     total_bytes = 0
     total_jsonl_removed = 0
-    total_opencode_sessions = 0
-
     for plan in plans:
         print(f"\n[{plan.label}]")
 
@@ -691,30 +400,18 @@ def print_plan_summary(plans: list[CliCleanupPlan], cutoff: datetime) -> None:
                     f"- JSONL 剪裁: {prune.path} -> 预计删除 {prune.preview_removed}/{prune.preview_total} 行"
                 )
 
-        if plan.opencode_sessions:
-            total_opencode_sessions += len(plan.opencode_sessions)
-            print(f"- OpenCode 会话删除: {len(plan.opencode_sessions)} 个")
-            for session in plan.opencode_sessions[:5]:
-                dt = datetime.fromtimestamp(session.updated_ms / 1000, tz=timezone.utc).astimezone()
-                print(f"  {session.session_id} ({dt.strftime('%Y-%m-%d %H:%M:%S %z')})")
-            if len(plan.opencode_sessions) > 5:
-                print(f"  ... 其余 {len(plan.opencode_sessions) - 5} 个会话")
-
         for note in plan.notes:
             print(f"- {note}")
 
     print("\n[总计]")
     print(f"- 待删文件: {total_files} 个 ({human_size(total_bytes)})")
     print(f"- 待删 JSONL 行: {total_jsonl_removed} 行")
-    print(f"- 待删 OpenCode 会话: {total_opencode_sessions} 个")
 
 
 def execute_plan(plans: list[CliCleanupPlan], cutoff_epoch_s: float) -> int:
     deleted_files = 0
     deleted_bytes = 0
     pruned_lines = 0
-    deleted_opencode_sessions = 0
-    targeted_opencode_sessions = 0
     failed_actions: list[str] = []
 
     for plan in plans:
@@ -755,27 +452,9 @@ def execute_plan(plans: list[CliCleanupPlan], cutoff_epoch_s: float) -> int:
             except OSError as e:
                 failed_actions.append(f"剪裁 JSONL 失败: {prune.path} ({e})")
 
-        if plan.key == "opencode" and plan.opencode_sessions:
-            targeted_opencode_sessions += len(plan.opencode_sessions)
-            if plan.opencode_db_path is None:
-                failed_actions.append("OpenCode 删除失败: 缺少数据库路径。")
-            else:
-                print(f"- 批量删除 OpenCode 会话: {len(plan.opencode_sessions)} 个")
-                removed, err = delete_opencode_old_sessions(
-                    db_path=plan.opencode_db_path,
-                    cutoff_epoch_ms=int(cutoff_epoch_s * 1000),
-                )
-                if err:
-                    failed_actions.append(err)
-                else:
-                    deleted_opencode_sessions += removed
-                    print(f"  已删除 OpenCode 会话: {removed} 个")
-
     print_header("执行结果")
     print(f"- 已删除文件: {deleted_files} 个 ({human_size(deleted_bytes)})")
     print(f"- 已剪裁 JSONL 行: {pruned_lines} 行")
-    print(f"- 已删除 OpenCode 会话(数据库): {deleted_opencode_sessions} 个")
-    print(f"- 已清理 OpenCode 会话缓存目标: {targeted_opencode_sessions} 个")
 
     if failed_actions:
         print(f"- 失败项: {len(failed_actions)}")
@@ -807,7 +486,6 @@ def main() -> int:
     builders = {
         "claude": build_claude_plan,
         "codex": build_codex_plan,
-        "opencode": build_opencode_plan,
         "gemini": build_gemini_plan,
     }
     plans = [builders[key](cutoff_epoch_s) for key in selected]

@@ -18,9 +18,10 @@
 
 - Claude Code
 - Codex
-- OpenCode
 - Gemini CLI
 - Others
+
+opencode is shit.
 
 另外也包含少量维护/迁移工具，主要用于清理或修复各类 CLI 的本地状态与历史数据。
 
