@@ -1,0 +1,28 @@
+providers:
+  custom-provider:
+    baseUrl: https://your-openai-compatible-base-url.example.com/v1
+    apiKey: sk-your-api-key-here
+    api: openai-responses
+    authHeader: true
+    models:
+      - id: gpt-5.4
+        name: GPT-5.4 (Custom)
+        contextWindow: 258000
+        maxTokens: 128000
+        input:
+          - text
+          - image
+      - id: gpt-5.4(high)
+        name: GPT-5.4(high) (Custom)
+        contextWindow: 258000
+        maxTokens: 128000
+        input:
+          - text
+          - image
+      - id: gpt-5.4(xhigh)
+        name: GPT-5.4(xhigh) (Custom)
+        contextWindow: 258000
+        maxTokens: 128000
+        input:
+          - text
+          - image

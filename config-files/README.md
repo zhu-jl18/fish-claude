@@ -2,6 +2,12 @@
 
 这里存放各 CLI 的基础配置参考文件。
 
+## Oh My Pi
+
+- `oh-my-pi/agent.config.yml`：OMP 全局 `config.yml` 参考副本；复制到 `~/.omp/agent/config.yml` 后按需调整
+- `oh-my-pi/agent.models.yml`：OMP 全局 `models.yml` 参考副本；复制到 `~/.omp/agent/models.yml`，并自行填入真实 API Key
+- 项目级覆盖通常放在 `<project>/.omp/`，常见文件包括 `AGENTS.md`、`SYSTEM.md`、`settings.json`、`mcp.json`
+
 ## Claude
 
 - `claude/example.settings.json`：Claude `settings.json` 参考模板

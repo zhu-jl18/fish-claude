@@ -1,0 +1,17 @@
+lastChangelogVersion: 14.0.4
+skills:
+  enabled: true
+  enableCodexUser: false
+  enableClaudeUser: false
+  enableClaudeProject: false
+  enablePiUser: true
+  enablePiProject: true
+commands:
+  enableClaudeUser: false
+  enableClaudeProject: false
+mcp:
+  enableProjectConfig: true
+  enableClaudeUser: false
+  enableCodexUser: false
+modelRoles:
+  default: custom-provider/model-name
