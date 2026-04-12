@@ -6,10 +6,21 @@
 
 | CLI         | 全局文件路径                   |
 | ----------- | ------------------------------ |
+| OMP         | `~/.omp/agent/AGENTS.md`       |
 | Claude Code | `~/.claude/CLAUDE.md`          |
 | Codex       | `~/.codex/AGENTS.md`           |
 | Gemini CLI  | `~/.gemini/GEMINI.md`          |
 | AmpCode     | `~/.config/amp/AGENTS.md`      |
+
+
+## General
+
+| #   | 模块                                         | 职责                                    | 依赖     |
+| --- | -------------------------------------------- | --------------------------------------- | -------- |
+| 01  | [no-extra-notes](general/01-no-extra-notes.md)   | 禁止在文档主结构外多嘴补注释或说明 | — |
+| 02  | [envirnment](general/02-envirnment.md)           | Windows + WSL2 环境模板（Python / Go / Rust / Git） | 本机环境可选模块 |
+| 03  | [git-commit-push](general/03-git-commit-push.md) | Git 提交 / push / commit message 通用规则 | — |
+
 
 ## Claude Code
 
@@ -18,7 +29,6 @@
 | 01  | [defaults](claude/01-defaults.md)             | 交互默认行为（语言、格式、先读后写）   | —                                                                 |
 | 02  | [code-quality](claude/02-code-quality.md)     | 代码质量标准、红线、安全、清理         | —                                                                 |
 | 03  | [research](claude/03-research.md)             | 查资料方法论（禁止猜测）               | [Context7](../mcp/context7.md)                                    |
-| 04  | [git](claude/04-git.md)                       | Git 工作流、提交规范、账号身份         | `gh` CLI                                                          |
 | 05  | [environment](claude/05-environment.md)       | OS / Shell / Python 环境配置           | —                                                                 |
 | 06  | [priority-stack](claude/06-priority-stack.md) | 优先级堆栈（最高级行为约束）           | —                                                                 |
 | 07  | [dev-workflow](claude/07-dev-workflow.md)     | code-dispatcher 开发工作流（按需启用） | [code-dispatcher-toolkit](../packs/code-dispatcher-toolkit.md) |
@@ -39,5 +49,18 @@
 | 05  | [debug-first](codex/05-debug-first.md)             | 调试策略（禁止静默兜底）                 | —                                                               |
 | 06  | [multi-agent](codex/06-multi-agent.md)             | 多智能体协作规范                         | 默认开启；显式配置见 [default.config.toml](../config-files/codex/default.config.toml) |
 | 07  | [no-compat](codex/07-no-compat.md)                 | 禁止向后兼容（优先干净架构）             | —                                                               |
+| 08  | [reply-style](codex/08-reply-style.md)           | 回答风格（简洁直接、反模板化）           | —                                                               |
+
+
+
+
+## Oh My Pi
+
+| #   | 模块                                          | 职责                                         | 依赖     |
+| --- | --------------------------------------------- | -------------------------------------------- | -------- |
+| 01  | [defaults](oh-my-pi/01-defaults.md)           | 交互默认行为（语言、风格、直接执行）         | —        |
+| 03  | [code-style](oh-my-pi/03-code-style.md)       | 代码风格（函数式、KISS、DRY）                | —        |
+| 04  | [architecture](oh-my-pi/04-architecture.md)   | 架构与设计原则（第一性原理、反 XY）          | —        |
+
 
 ## Gemini
