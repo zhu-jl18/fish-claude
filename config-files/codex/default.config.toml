@@ -3,6 +3,7 @@ model = "gpt-5.4"
 model_context_window = 1000000
 model_auto_compact_token_limit = 800000
 model_reasoning_effort = "xhigh"
+plan_mode_reasoning_effort = "high"
 disable_response_storage = true
 model_reasoning_summary = "detailed"
 network_access = true

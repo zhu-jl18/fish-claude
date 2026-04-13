@@ -62,5 +62,4 @@
 | 03  | [code-style](oh-my-pi/03-code-style.md)       | 代码风格（函数式、KISS、DRY）                | —        |
 | 04  | [architecture](oh-my-pi/04-architecture.md)   | 架构与设计原则（第一性原理、反 XY）          | —        |
 
-
 ## Gemini
