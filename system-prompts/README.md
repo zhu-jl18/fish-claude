@@ -10,19 +10,27 @@
 
 - file: `codex-cli.md`
 - source remote: `https://github.com/openai/codex.git`
-- local mirror: `X:\Toys\codex`
-- source prompt path: `codex-rs/core/prompt.md`
-- synced date: `2026-03-09`
+- source prompt path: `codex-rs/models-manager/prompt.md` (also `codex-rs/protocol/src/prompts/base_instructions/default.md`)
+- synced date: `2026-04-13`
 - note: Codex CLI currently uses a mostly static primary system prompt file, so this copy is close to a direct source sync
 
 ## Gemini CLI
 
 - file: `gemini-cli.md`
 - source remote: `https://github.com/google-gemini/gemini-cli.git`
-- local mirror: `X:\Toys\gemini-cli`
 - source commit: `ca7ac0003`
 - source prompt path: `packages/core/src/prompts/snippets.ts`
 - synced date: `2026-03-09`
 - note: Gemini CLI does not use one static system prompt file like Codex
 - note: Gemini CLI composes the final prompt dynamically from `snippets.ts`
 - note: `gemini-cli.md` records the Gemini 3 / modern / interactive baseline plus the major conditional sections injected at runtime
+
+## Oh My Pi
+
+- source remote: `https://github.com/nicobailon/oh-my-pi.git`
+- file: `oh-my-pi.md`
+- source commit: `cff84d764`
+- source prompt path: `packages/coding-agent/src/prompts/system/system-prompt.md`
+- synced date: `2026-04-13`
+- note: Oh My Pi uses Handlebars templates (`{{...}}`) for dynamic prompt composition
+- note: the system prompt is the primary template; sub-agent and custom prompts are separate templates composed at runtime

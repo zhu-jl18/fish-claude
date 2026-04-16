@@ -2,8 +2,7 @@
 
 <for Windows>
 Platform:
-- Most of the time: Windows 11 with pwsh7, cmd, or Git Bash.
-- Some sessions may be launched by a Windows app while the actual thread runs in WSL2.
+- Windows 11 with pwsh7, cmd, or Git Bash.
 
 Python:
 - Use `uv` for general projects; use conda for ML / scientific projects.
@@ -43,3 +42,22 @@ Git/GitHub:
 - Use `git-account status` or `git var GIT_AUTHOR_IDENT` + `git remote -v` to confirm git identity.
 - Use `git-account gh status` or `gh auth status` when `gh` commands are involved.
 </for WSL2>
+
+---
+
+## Optional: Claude Code Shell Quirks
+
+When using PowerShell:
+
+- Windows PowerShell (5.x) does not support `&&`; use `;` or `if ($?) { ... }`. pwsh 7+ supports `&&` and `||` natively.
+- Quote paths that contain spaces or non-ASCII characters.
+
+When using Git Bash on Windows:
+
+- **NUL file bug**: Claude Code may create actual files named `nul` when commands redirect output to `NUL` (e.g., `> NUL`, `2> NUL`). `NUL` is a reserved device name on Windows; if a `nul` file is created, delete it via UNC path: `del "\\.\<full-path>\nul"`
+
+## Optional: Codex APP + WSL2 Backend
+
+When running in Codex CLI or the Codex desktop app, this instruction file lives in the Windows-side `~/.codex/` and is read regardless of backend.
+
+If launched via WSL2 backend, you are physically running inside WSL2. In that case, also check the WSL2-side `~/My_WSL2_Config.md` file — it may contain additional environment configuration (e.g. local dev environment notes) that is more relevant to your actual runtime context.

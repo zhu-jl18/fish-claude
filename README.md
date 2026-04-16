@@ -19,9 +19,9 @@
 - Claude Code
 - Codex
 - Gemini CLI
-- Others
+- Oh My Pi
 
-opencode is shit.
+> 🚫 **<span style="font-size:1.3em">OpenCode is</span> <span style="font-size:1.6em;color:red;font-weight:900">SHIT</span>** 🚫
 
 另外也包含少量维护/迁移工具，主要用于清理或修复各类 CLI 的本地状态与历史数据。
 

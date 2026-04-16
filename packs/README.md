@@ -32,5 +32,6 @@ cp -r <pack>/hooks/     <project>/.claude/hooks/
 | Pack | 说明 |
 | --- | --- |
 | [code-dispatcher-toolkit](code-dispatcher-toolkit.md) | 基于 `code-dispatcher` CLI 的多后端 AI 编码工具集，包含执行器、编排 skill、prompt 模板与安装脚本 |
+| [rtk](rtk.md) | RTK 外部工具参考页；说明 Claude/Codex 官方接入方式，以及基于 OMP rules 的本地 OMP 适配 |
 | [harness](harness/) | Claude Code 长运行会话 skill+hook 组合包，跨上下文窗口的任务持久化、失败恢复和进度追踪 |
 | [codex-review-loop](codex-review-loop/) | Claude Code 专用 review loop bundle，Stop 时触发 Codex 多视角 review |

@@ -67,3 +67,9 @@ Use conventional commits format:
 ```
 
 <type> and <subject> are required; <body> and <footer> are optional.
+
+## Local Repo Clones
+
+If you are on my WSL2 environment:
+- `codex`、`oh-my-pi`、`gemini-cli`、`rtk` → `~/01-workspace/`
+- `code-dispatcher-toolkit` → `~/personal-workspace/`

@@ -19,9 +19,9 @@ This repository shares my personal rule modules, baseline config references, pac
 - Claude Code
 - Codex
 - Gemini CLI
-- Others
+- Oh My Pi
 
-opencode is shit.
+> 🚫 **<span style="font-size:1.3em">OpenCode is</span> <span style="font-size:1.6em;color:red;font-weight:900">SHIT</span>** 🚫
 
 It also includes a small set of maintenance/migration tools, primarily for cleaning up or repairing local state and history data across these CLIs.
 

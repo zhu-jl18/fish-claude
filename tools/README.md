@@ -17,3 +17,16 @@ ccc
   说明见 `tools/docs/clean_chat_history.md`
 - `migrate_codex_provider_history.py`：修复 Codex `model_provider` 变更后 chat history / resume / fork 无法正确加载
   说明见 `tools/docs/migrate_codex_provider_history.md`
+
+
+## OMP Patches
+
+Local patches for the installed OMP binary. Each patch directory contains an `apply.ts` runner and a `patch.diff`.
+
+- `omp-patch-codex-websearch-byok`：让 OMP 的 codex web_search provider 支持自定义 OpenAI Responses 后端（baseUrl+apiKey），不再强制走 ChatGPT OAuth。适用于 juya(new-api) -> CPA 等反代链路。
+
+```bash
+bun run tools/omp-patch-codex-websearch-byok/apply.ts          # apply
+bun run tools/omp-patch-codex-websearch-byok/apply.ts --status # check status
+bun run tools/omp-patch-codex-websearch-byok/apply.ts --reverse # revert
+```

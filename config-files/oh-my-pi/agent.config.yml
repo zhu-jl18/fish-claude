@@ -15,3 +15,15 @@ mcp:
   enableCodexUser: false
 modelRoles:
   default: custom-provider/model-name
+
+disabledProviders:
+  - claude
+  - claude-plugins
+  - codex
+  - gemini
+  - opencode
+  - cursor
+  - cline
+  - windsurf
+  - vscode
+  - github

@@ -20,6 +20,7 @@
 | 01  | [no-extra-notes](general/01-no-extra-notes.md)   | 禁止在文档主结构外多嘴补注释或说明 | — |
 | 02  | [envirnment](general/02-envirnment.md)           | Windows + WSL2 环境模板（Python / Go / Rust / Git） | 本机环境可选模块 |
 | 03  | [git-commit-push](general/03-git-commit-push.md) | Git 提交 / push / commit message 通用规则 | — |
+| 04  | [reply-style](general/04-reply-style.md)         | 回答风格（简洁直接、反模板化）            | — |
 
 
 ## Claude Code
@@ -32,7 +33,6 @@
 | 05  | [environment](claude/05-environment.md)       | OS / Shell / Python 环境配置           | —                                                                 |
 | 06  | [priority-stack](claude/06-priority-stack.md) | 优先级堆栈（最高级行为约束）           | —                                                                 |
 | 07  | [dev-workflow](claude/07-dev-workflow.md)     | code-dispatcher 开发工作流（按需启用） | [code-dispatcher-toolkit](../packs/code-dispatcher-toolkit.md) |
-| 08  | [serena](claude/08-serena.md)                 | Serena MCP 语义检索规则（按需启用）    | [Serena](../mcp/serena.md)                                        |
 | 09  | [playwright](claude/09-playwright.md)         | Playwright UI 验证规则（按需启用）     | [Playwright](../mcp/playwright.md)                                |
 | 10  | [agent-teams](claude/10-agent-teams.md)       | Agent Teams 使用规范（按需启用）       | —                                                                 |
 
@@ -43,13 +43,11 @@
 | #   | 模块                                               | 职责                                     | 依赖                                                            |
 | --- | -------------------------------------------------- | ---------------------------------------- | --------------------------------------------------------------- |
 | 01  | [basic-rules](codex/01-basic-rules.md)             | 通用行为准则（语言、输出风格、沟通方式） | —                                                               |
-| 02  | [text-editing-tool](codex/02-text-editing-tool.md) | 内置编辑工具指导                         | —                                                               |
 | 03  | [inherited-tool](codex/03-inherited-tool.md)       | 工具优先级与并行编排                     | —                                                               |
 | 04  | [role-play-sm](codex/04-role-play-sm.md)           | 角色扮演人设                             | —                                                               |
 | 05  | [debug-first](codex/05-debug-first.md)             | 调试策略（禁止静默兜底）                 | —                                                               |
 | 06  | [multi-agent](codex/06-multi-agent.md)             | 多智能体协作规范                         | 默认开启；显式配置见 [default.config.toml](../config-files/codex/default.config.toml) |
 | 07  | [no-compat](codex/07-no-compat.md)                 | 禁止向后兼容（优先干净架构）             | —                                                               |
-| 08  | [reply-style](codex/08-reply-style.md)           | 回答风格（简洁直接、反模板化）           | —                                                               |
 
 
 
@@ -61,5 +59,12 @@
 | 01  | [defaults](oh-my-pi/01-defaults.md)           | 交互默认行为（语言、风格、直接执行）         | —        |
 | 03  | [code-style](oh-my-pi/03-code-style.md)       | 代码风格（函数式、KISS、DRY）                | —        |
 | 04  | [architecture](oh-my-pi/04-architecture.md)   | 架构与设计原则（第一性原理、反 XY）          | —        |
+
+## _archived
+
+| 文件                                                         | 归档原因                                       |
+| ------------------------------------------------------------ | ---------------------------------------------- |
+| [codex-02-text-editing-tool](_archived/codex-02-text-editing-tool.md) | Codex 已很少出现 apply_patch 调用错误，不再需要 |
+| [claude-08-serena](_archived/claude-08-serena.md) | Serena MCP 当前很少使用了 |
 
 ## Gemini

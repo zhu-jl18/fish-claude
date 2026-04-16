@@ -4,6 +4,7 @@
 .omp/
 desktop.ini
 .vscode/
+fish-notes/
 # Windows system files
 Thumbs.db
 *.lnk

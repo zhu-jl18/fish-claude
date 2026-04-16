@@ -1,11 +1,6 @@
-diff --git a/src/config/settings-schema.ts b/src/config/settings-schema.ts
 --- a/src/config/settings-schema.ts
 +++ b/src/config/settings-schema.ts
-@@ -1386,10 +1386,22 @@
- 	// MCP
- 	"mcp.enableProjectConfig": {
- 		type: "boolean",
- 		default: true,
+@@ -1414,6 +1414,18 @@
  		ui: { tab: "tools", label: "MCP Project Config", description: "Load .mcp.json/mcp.json from project root" },
  	},
  
@@ -24,18 +19,7 @@ diff --git a/src/config/settings-schema.ts b/src/config/settings-schema.ts
  	"mcp.discoveryMode": {
  		type: "boolean",
  		default: false,
-@@ -1839,17 +1851,26 @@
- export interface SkillsSettings {
- 	enabled?: boolean;
- 	enableSkillCommands?: boolean;
- 	enableCodexUser?: boolean;
- 	enableClaudeUser?: boolean;
- 	enableClaudeProject?: boolean;
- 	enablePiUser?: boolean;
- 	enablePiProject?: boolean;
- 	customDirectories?: string[];
- 	ignoredSkills?: string[];
- 	includeSkills?: string[];
+@@ -1874,6 +1886,16 @@
  	disabledExtensions?: string[];
  }
  
@@ -48,13 +32,13 @@ diff --git a/src/config/settings-schema.ts b/src/config/settings-schema.ts
 +	notifications?: boolean;
 +	notificationDebounceMs?: number;
 +}
++
  export interface CommitSettings {
  	mapReduceEnabled: boolean;
  	mapReduceMinFiles: number;
-diff --git a/src/mcp/config.ts b/src/mcp/config.ts
 --- a/src/mcp/config.ts
 +++ b/src/mcp/config.ts
-@@ -16,8 +16,12 @@
+@@ -16,6 +16,10 @@
  export interface LoadMCPConfigsOptions {
  	/** Whether to load project-level config (default: true) */
  	enableProjectConfig?: boolean;
@@ -65,9 +49,8 @@ diff --git a/src/mcp/config.ts b/src/mcp/config.ts
  	/** Whether to filter out Exa MCP servers (default: true) */
  	filterExa?: boolean;
  	/** Whether to filter out browser MCP servers when builtin browser tool is enabled (default: false) */
- 	filterBrowser?: boolean;
- }
-@@ -95,15 +99,25 @@
+@@ -94,16 +98,26 @@
+  */
  export async function loadAllMCPConfigs(cwd: string, options?: LoadMCPConfigsOptions): Promise<LoadMCPConfigsResult> {
  	const enableProjectConfig = options?.enableProjectConfig ?? true;
 +	const enableClaudeUser = options?.enableClaudeUser ?? true;
@@ -97,12 +80,9 @@ diff --git a/src/mcp/config.ts b/src/mcp/config.ts
  
  	// Load user-level disabled servers list
  	const disabledServers = new Set(await readDisabledServers(getMCPConfigPath("user", cwd)));
-diff --git a/src/mcp/loader.ts b/src/mcp/loader.ts
 --- a/src/mcp/loader.ts
 +++ b/src/mcp/loader.ts
-@@ -27,14 +27,18 @@
- export interface MCPToolsLoadOptions {
- 	/** Called when starting to connect to servers */
+@@ -30,6 +30,10 @@
  	onConnecting?: (serverNames: string[]) => void;
  	/** Whether to load project-level config (default: true) */
  	enableProjectConfig?: boolean;
@@ -113,12 +93,6 @@ diff --git a/src/mcp/loader.ts b/src/mcp/loader.ts
  	/** Whether to filter out Exa MCP servers (default: true) */
  	filterExa?: boolean;
  	/** Whether to filter out browser MCP servers when builtin browser tool is enabled (default: false) */
- 	filterBrowser?: boolean;
- 	/** SQLite storage for MCP tool cache (null disables cache) */
- 	cacheStorage?: AgentStorage | null;
- 	/** Auth storage used to resolve OAuth credentials before initial MCP connect */
- 	authStorage?: AuthStorage;
- }
 @@ -70,6 +74,8 @@
  		result = await manager.discoverAndConnect({
  			onConnecting: options?.onConnecting,
@@ -128,10 +102,9 @@ diff --git a/src/mcp/loader.ts b/src/mcp/loader.ts
  			filterExa: options?.filterExa,
  			filterBrowser: options?.filterBrowser,
  		});
-diff --git a/src/mcp/manager.ts b/src/mcp/manager.ts
 --- a/src/mcp/manager.ts
 +++ b/src/mcp/manager.ts
-@@ -103,10 +103,14 @@
+@@ -103,6 +103,10 @@
  export interface MCPDiscoverOptions {
  	/** Whether to load project-level config (default: true) */
  	enableProjectConfig?: boolean;
@@ -142,11 +115,8 @@ diff --git a/src/mcp/manager.ts b/src/mcp/manager.ts
  	/** Whether to filter out Exa MCP servers (default: true) */
  	filterExa?: boolean;
  	/** Whether to filter out browser MCP servers when builtin browser tool is enabled (default: false) */
- 	filterBrowser?: boolean;
- 	/** Called when starting to connect to servers */
- 	onConnecting?: (serverNames: string[]) => void;
- }
-@@ -245,5 +249,7 @@
+@@ -244,6 +248,8 @@
+ 	async discoverAndConnect(options?: MCPDiscoverOptions): Promise<MCPLoadResult> {
  		const { configs, exaApiKeys, sources } = await loadAllMCPConfigs(this.cwd, {
  			enableProjectConfig: options?.enableProjectConfig,
 +			enableClaudeUser: options?.enableClaudeUser,
@@ -154,30 +124,22 @@ diff --git a/src/mcp/manager.ts b/src/mcp/manager.ts
  			filterExa: options?.filterExa,
  			filterBrowser: options?.filterBrowser,
  		});
-diff --git a/src/sdk.ts b/src/sdk.ts
 --- a/src/sdk.ts
 +++ b/src/sdk.ts
-@@ -1001,14 +1001,16 @@
- 		const mcpResult = await logger.time("discoverAndLoadMCPTools", discoverAndLoadMCPTools, cwd, {
- 			onConnecting: serverNames => {
- 				if (options.hasUI && serverNames.length > 0) {
- 					process.stderr.write(`${chalk.gray(`Connecting to MCP servers: ${serverNames.join(", ")}…`)}\n`);
- 				}
- 			},
- 			enableProjectConfig: settings.get("mcp.enableProjectConfig") ?? true,
-+			enableClaudeUser: settings.get("mcp.enableClaudeUser") ?? true,
-+			enableCodexUser: settings.get("mcp.enableCodexUser") ?? true,
- 			// Always filter Exa - we have native integration
- 			filterExa: true,
- 			// Filter browser MCP servers when builtin browser tool is active
- 			filterBrowser: settings.get("browser.enabled") ?? false,
- 			cacheStorage: settings.getStorage(),
- 			authStorage,
- 		});
-diff --git a/src/modes/controllers/mcp-command-controller.ts b/src/modes/controllers/mcp-command-controller.ts
+@@ -1016,6 +1016,8 @@
+ 					}
+ 				},
+ 				enableProjectConfig: settings.get("mcp.enableProjectConfig") ?? true,
++				enableClaudeUser: settings.get("mcp.enableClaudeUser") ?? true,
++				enableCodexUser: settings.get("mcp.enableCodexUser") ?? true,
+ 				// Always filter Exa - we have native integration
+ 				filterExa: true,
+ 				// Filter browser MCP servers when builtin browser tool is active
 --- a/src/modes/controllers/mcp-command-controller.ts
 +++ b/src/modes/controllers/mcp-command-controller.ts
-@@ -1445,3 +1445,9 @@
+@@ -1443,7 +1443,13 @@
+ 		await this.ctx.mcpManager.disconnectAll();
+ 
  		// Rediscover and connect
 -		const result = await this.ctx.mcpManager.discoverAndConnect();
 +		const result = await this.ctx.mcpManager.discoverAndConnect({
@@ -188,3 +150,5 @@ diff --git a/src/modes/controllers/mcp-command-controller.ts b/src/modes/control
 +			filterBrowser: this.ctx.settings.get("browser.enabled") ?? false,
 +		});
  		await this.ctx.session.refreshMCPTools(this.ctx.mcpManager.getTools());
+ 
+ 		// Show any connection errors
