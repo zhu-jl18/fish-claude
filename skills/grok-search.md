@@ -13,8 +13,3 @@
 - 支持 web_search、web_fetch、web_map 三个核心功能
 - 跨平台支持：Windows (cmd/PowerShell/Git Bash)、Linux、macOS
 
-## 待补
-
-- 安装方式
-- 常用命令与工作流
-- 适合场景与不适合场景

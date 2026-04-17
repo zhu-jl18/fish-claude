@@ -29,8 +29,3 @@ curl -o ~/.omp/agent/skills/software-design-philosophy/SKILL.md \
 - 模块拆分、API 设计、重构取舍
 - 命名、注释、错误处理策略的设计讨论
 
-## 待补
-
-- Claude Code / Codex / Gemini CLI 的安装写法
-- 常用工作流
-- 不适合场景

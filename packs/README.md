@@ -35,3 +35,5 @@ cp -r <pack>/hooks/     <project>/.claude/hooks/
 | [rtk](rtk.md) | RTK 外部工具参考页；说明 Claude/Codex 官方接入方式，以及基于 OMP rules 的本地 OMP 适配 |
 | [harness](harness/) | Claude Code 长运行会话 skill+hook 组合包，跨上下文窗口的任务持久化、失败恢复和进度追踪 |
 | [codex-review-loop](codex-review-loop/) | Claude Code 专用 review loop bundle，Stop 时触发 Codex 多视角 review |
+| [context-mode](context-mode.md) | Claude Code plugin + MCP server；sandbox 内处理大输出，~98% context 压缩，附 session continuity |
+| [caveman](caveman.md) | Claude Code/Codex plugin；caveman-speak 削减 ~75% 输出 token，附 commit/review/compress 子命令 |

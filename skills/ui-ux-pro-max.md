@@ -13,8 +13,3 @@
 - 常见用法是先生成一份 design system，再按 domain 或 stack 补充细节
 - 公开资料里支持 Claude Code、Codex、Gemini CLI 等多种 agent/CLI
 
-## 待补
-
-- 安装方式
-- 常用命令与工作流
-- 适合场景与不适合场景

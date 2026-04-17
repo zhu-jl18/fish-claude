@@ -28,9 +28,3 @@ curl -o ~/.omp/agent/skills/ai-coding-discipline/SKILL.md \
 - 代码编写 / 重构 / 修 bug
 - 测试编写与补强
 - review AI 生成代码时防止常见糊弄式实现
-
-## 待补
-
-- Claude Code / Codex / Gemini CLI 的安装写法
-- 常用工作流
-- 不适合场景

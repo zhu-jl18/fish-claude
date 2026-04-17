@@ -57,8 +57,14 @@
 | #   | 模块                                          | 职责                                         | 依赖     |
 | --- | --------------------------------------------- | -------------------------------------------- | -------- |
 | 01  | [defaults](oh-my-pi/01-defaults.md)           | 交互默认行为（语言、风格、直接执行）         | —        |
-| 03  | [code-style](oh-my-pi/03-code-style.md)       | 代码风格（函数式、KISS、DRY）                | —        |
-| 04  | [architecture](oh-my-pi/04-architecture.md)   | 架构与设计原则（第一性原理、反 XY）          | —        |
+| 03  | [code-style](oh-my-pi/03-code-style.md)       | 代码风格（函数式、KISS、DRY）                | [ai-coding-discipline](../skills/ai-coding-discipline.md)        |
+| 04  | [architecture](oh-my-pi/04-architecture.md)   | 架构与设计原则（第一性原理、反 XY）          | [software-design-philosophy](../skills/software-design-philosophy.md)        |
+
+## Gemini
+
+| #   | 模块                                         | 职责                                      | 依赖 |
+| --- | -------------------------------------------- | ----------------------------------------- | ---- |
+| 01  | [reasoning-depth](gemini/01-reasoning-depth.md) | Gemini 深度推理 prompt hack（`EFFORT LEVEL`） | — |
 
 ## _archived
 
@@ -66,5 +72,3 @@
 | ------------------------------------------------------------ | ---------------------------------------------- |
 | [codex-02-text-editing-tool](_archived/codex-02-text-editing-tool.md) | Codex 已很少出现 apply_patch 调用错误，不再需要 |
 | [claude-08-serena](_archived/claude-08-serena.md) | Serena MCP 当前很少使用了 |
-
-## Gemini

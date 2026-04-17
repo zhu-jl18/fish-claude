@@ -30,9 +30,3 @@ curl -o ~/.omp/agent/skills/sync-readme/SKILL.md \
 - 多语言文档仓库，需要保持各语言 README 一致
 - 更新主 README 后批量同步翻译版本
 - 配置仓库中 `config-files/`、安装命令或目录结构变更后，同步各语言 README / 配置说明
-
-## 待补
-
-- Claude Code / Codex / Gemini CLI 的安装写法
-- 常用命令与工作流
-- 不适合场景

@@ -30,3 +30,11 @@ bun run tools/omp-patch-codex-websearch-byok/apply.ts          # apply
 bun run tools/omp-patch-codex-websearch-byok/apply.ts --status # check status
 bun run tools/omp-patch-codex-websearch-byok/apply.ts --reverse # revert
 ```
+
+- `omp-patch-status-line-default-metrics`：修复 OMP Default status line 在窄宽度下优先裁掉 context/tokens/cost 的问题，改为先保留 `context_pct`、`token_total`、`cost`，再裁掉 `path/git/pr`。
+
+```bash
+bun run tools/omp-patch-status-line-default-metrics/apply.ts          # apply
+bun run tools/omp-patch-status-line-default-metrics/apply.ts --status # check status
+bun run tools/omp-patch-status-line-default-metrics/apply.ts --reverse # revert
+```

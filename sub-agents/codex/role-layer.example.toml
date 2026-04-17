@@ -1,14 +1,28 @@
 # Practical Codex role-layer example.
 #
-# Rules:
-# - Omitted keys inherit from the parent agent.
-# - A same-named `[agents.<role>]` entry in `config.toml` overrides builtin role
-#   metadata such as `description`, `config_file`, and `nickname_candidates`.
-# - To follow the parent's current model / provider / profile, do not set
-#   `model`, `model_provider`, or `profile`.
-# - Spawn runtime overwrites the live `approval_policy`,
+# Layering rules (verified against codex-rs source):
+# - Keys written here override the parent's merged config; omitted keys inherit
+#   from the parent's current effective config.
+# - Role metadata (`description`, `nickname_candidates`) may be declared at this
+#   file's top level. If the same role is also declared in `config.toml` under
+#   `[agents.<role>]`, values read from this file win
+#   (see `core/src/config/agent_roles.rs::read_declared_role`).
+# - Dropping this file into `~/.codex/agents/<role>.toml` is enough — Codex
+#   auto-discovers roles in that folder even without an `[agents.<role>]` entry
+#   in `config.toml` (see `discover_agent_roles_in_dir`).
+# - Spawn runtime unconditionally rewrites the live `approval_policy`,
 #   `shell_environment_policy`, `sandbox_mode`, `sandbox_workspace_write`,
-#   and `cwd`, so those are usually not worth putting here.
+#   and `cwd` to the parent's values (see
+#   `core/src/tools/handlers/multi_agents_common.rs`), so writing them here has
+#   no effect.
+# - Profile / provider preservation: leaving `model`, `model_provider`, or
+#   `profile` unset follows the parent's current effective choice. Setting any
+#   one disables the corresponding preservation policy
+#   (see `core/src/agent/role.rs::preservation_policy`).
+
+# Role metadata (optional, file-level):
+# description = "Short role purpose shown in spawn tool guidance."
+# nickname_candidates = ["Ada", "Hopper"]
 
 model_reasoning_effort = "xhigh"
 

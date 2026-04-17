@@ -31,3 +31,5 @@
 > - role layer 只覆写文件里实际写出的配置键；没写的继续继承父线程当前有效配置
 > - spawn runtime 会重新写回 live `approval_policy`、`shell_environment_policy`、`sandbox` 和 `cwd`，这些通常不值得放进 role layer
 > - 当前官方 builtin role 是 `default`、`explorer`、`worker`；`spark` 和 `awaiter` 是本地自定义 role
+> - 当前参考模板显式开启 `features.multi_agent = true` 和 `features.multi_agent_v2 = true`，因为现阶段 Codex 仍用 `multi_agent` 作为 v2 工具面的前置门控
+> - 如果要细调 v2 行为，可改成 `[features.multi_agent_v2]` table 并设置 `enabled`、`usage_hint_enabled`、`usage_hint_text`、`hide_spawn_agent_metadata`
