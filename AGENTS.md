@@ -13,7 +13,7 @@ Contains reusable rule fragments for project docs, baseline CLI config reference
 
 ### Composable Module System
 
-Each `.md` file in `agent-instructions/general/`, `agent-instructions/claude/`, `agent-instructions/codex/`, and `agent-instructions/oh-my-pi/` is an **independent, composable rule fragment**. Users browse, pick what they need, and concatenate modules into their own global config:
+Each `.md` file in `agent-instructions/general/`, `agent-instructions/claude/`, `agent-instructions/codex/`, `agent-instructions/oh-my-pi/`, and `agent-instructions/gemini/` is an **independent, composable rule fragment**. Users browse, pick what they need, and concatenate modules into their own global config:
 
 ```bash
 # Claude Code
@@ -24,6 +24,9 @@ cat general/01-no-extra-notes.md codex/01-basic-rules.md codex/02-text-editing-t
 
 # Oh My Pi
 cat general/01-no-extra-notes.md oh-my-pi/01-defaults.md oh-my-pi/03-code-style.md ... > AGENTS.md
+
+# Gemini CLI
+cat general/01-no-extra-notes.md gemini/01-reasoning-depth.md ... > GEMINI.md
 ```
 
 For Codex, `config.toml` provides a `developer_instructions` field as a high-priority override slot — modules that Codex follows poorly can be moved from `AGENTS.md` into `developer_instructions` for stronger enforcement.
@@ -32,20 +35,21 @@ Module details and dependency info are documented in `agent-instructions/README.
 
 ### Directory Layout
 
-| Directory                        | Purpose                                                                                    |
-| -------------------------------- | ------------------------------------------------------------------------------------------ |
-| `agent-instructions/general/`    | Shared cross-CLI rule modules                                                              |
-| `agent-instructions/claude/`     | Claude Code rule modules (composable fragments)                                            |
-| `agent-instructions/codex/`      | Codex rule modules                                                                         |
-| `agent-instructions/oh-my-pi/`   | Oh My Pi rule modules                                                                      |
-| `config-files/`                  | Baseline CLI config references (`settings.json`, `config.toml`, etc.)                      |
-| `system-prompts/`                | Upstream system prompt references                                                          |
-| `mcp/`                           | MCP server installation & usage guides                                                     |
-| `skills/`                        | Custom skill definitions                                                                   |
-| `output-styles/`                 | Personality/style presets for AI output                                                    |
-| `slash-commands/`                | Slash command prompt templates                                                             |
-| `sub-agents/`                    | Sub-agent role layers and related examples                                                 |
-| `packs/`                         | Composite packages (commands + skills + hooks + subagents) and external toolkit references |
+| Directory                      | Purpose                                                                                    |
+| ------------------------------ | ------------------------------------------------------------------------------------------ |
+| `agent-instructions/general/`  | Shared cross-CLI rule modules                                                              |
+| `agent-instructions/claude/`   | Claude Code rule modules (composable fragments)                                            |
+| `agent-instructions/codex/`    | Codex rule modules                                                                         |
+| `agent-instructions/oh-my-pi/` | Oh My Pi rule modules                                                                      |
+| `agent-instructions/gemini/`   | Gemini CLI rule modules                                                                    |
+| `config-files/`                | Baseline CLI config references (`settings.json`, `config.toml`, etc.)                      |
+| `system-prompts/`              | Upstream system prompt references                                                          |
+| `mcp/`                         | MCP server installation & usage guides                                                     |
+| `skills/`                      | Custom skill definitions                                                                   |
+| `output-styles/`               | Personality/style presets for AI output                                                    |
+| `slash-commands/`              | Slash command prompt templates                                                             |
+| `sub-agents/`                  | Sub-agent role layers and related examples                                                 |
+| `packs/`                       | Composite packages (commands + skills + hooks + subagents) and external toolkit references |
 
 ## Rules for Editing This Repo
 
@@ -70,6 +74,6 @@ Use conventional commits format:
 
 ## Local Repo Clones
 
-If you are on my WSL2 environment:
+If you are on my WSL2 environment, you find these git repo cloned when you need:
 - `codex`、`oh-my-pi`、`gemini-cli`、`rtk` → `~/01-workspace/`
 - `code-dispatcher-toolkit` → `~/personal-workspace/`

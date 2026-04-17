@@ -1,11 +1,11 @@
 <div align="center">
+<img src="repo-logo.svg" alt="Fish Claude logo" width="180" />
 
 <h1>Fish Claude</h1>
 
 **Fish's Coding Agent Configs**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 ![GitHub stars](https://img.shields.io/github/stars/zhu-jl18/fish-claude?style=social)
 
 [English](README.en.md) | 中文
@@ -21,7 +21,8 @@
 - Gemini CLI
 - Oh My Pi
 
-> 🚫 **<span style="font-size:1.3em">OpenCode is</span> <span style="font-size:1.6em;color:red;font-weight:900">SHIT</span>** 🚫
+但不包括：
+- 🚫 OpenCode：就是构史
 
 另外也包含少量维护/迁移工具，主要用于清理或修复各类 CLI 的本地状态与历史数据。
 
@@ -39,6 +40,7 @@
 ├── slash-commands/  # Slash Commands
 ├── sub-agents/      # Sub-Agent role layer 与示例
 ├── packs/           # 组合包与外部工具集参考
+├── preset-cards/    # 可复用的 preset card / 人格预设卡片
 └── ai-services/     # 常与 AI 工作流配合使用的外部 API 服务参考
 ```
 
@@ -51,7 +53,7 @@
 
 ## 贡献
 
-欢迎提交 Issue 和 Pull Request。
+欢迎提交 Issue；如需提交 Pull Request，请先沟通并获得许可。
 
 ## 许可证
 

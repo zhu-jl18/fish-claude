@@ -1,11 +1,11 @@
 <div align="center">
+<img src="repo-logo.svg" alt="Fish Claude logo" width="180" />
 
 <h1>Fish Claude</h1>
 
 **Fish's Coding Agent Configs**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 ![GitHub stars](https://img.shields.io/github/stars/zhu-jl18/fish-claude?style=social)
 
 English | [中文](README.md)
@@ -21,7 +21,8 @@ This repository shares my personal rule modules, baseline config references, pac
 - Gemini CLI
 - Oh My Pi
 
-> 🚫 **<span style="font-size:1.3em">OpenCode is</span> <span style="font-size:1.6em;color:red;font-weight:900">SHIT</span>** 🚫
+But not including:
+- 🚫 OpenCode — basically dogwater
 
 It also includes a small set of maintenance/migration tools, primarily for cleaning up or repairing local state and history data across these CLIs.
 
@@ -39,6 +40,7 @@ It also includes a small set of maintenance/migration tools, primarily for clean
 ├── slash-commands/  # Slash Commands
 ├── sub-agents/      # Sub-Agent role layers and examples
 ├── packs/           # Composite packages and external toolkit references
+├── preset-cards/    # Reusable preset cards / persona presets
 └── ai-services/     # External API service references commonly used with AI workflows
 ```
 
@@ -51,7 +53,7 @@ It also includes a small set of maintenance/migration tools, primarily for clean
 
 ## Contributing
 
-Issues and Pull Requests are welcome.
+Issues are welcome. Please discuss and get permission before opening a Pull Request.
 
 ## License
 
