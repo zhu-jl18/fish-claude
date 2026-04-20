@@ -13,6 +13,13 @@
 | AmpCode     | `~/.config/amp/AGENTS.md`      |
 
 
+## Claude Code 补充说明
+
+- Claude Code 读取的是 `CLAUDE.md`，不是 `AGENTS.md`。
+- `CLAUDE.md` 支持用 `@path/to/file.md` 导入其他文件；相对路径相对于导入语句所在文件解析，也支持绝对路径。
+- 导入支持递归展开，最多 5 层。
+- 如果仓库里已经为其他 agent 维护了 `AGENTS.md`，可以在 `CLAUDE.md` 里直接写 `@AGENTS.md`，再追加 Claude Code 专属规则。
+
 ## General
 
 | #   | 模块                                         | 职责                                    | 依赖     |

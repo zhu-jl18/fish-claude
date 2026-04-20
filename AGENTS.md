@@ -59,6 +59,7 @@ Module details and dependency info are documented in `agent-instructions/README.
 4. **Keep modules composable**: one file = one responsibility; edits must preserve copy-paste assembly.
 5. **Minimal changes only**: small, focused edits scoped to the user's request; do not modify unrelated modules.
 6. **If file structure changes**, update index docs (`agent-instructions/README.md`, `system-prompts/README.md`, `mcp/README.md`, `packs/README.md`).
+7. **For `tools/`**, keep published `README.md` files reader-facing only. Put maintenance conventions in this `AGENTS.md`, not in tool docs. Organize `tools/` as one tool per second-level directory with a colocated `README.md`, and keep `tools/README.md` as the index.
 
 # Git Commit Message Format
 

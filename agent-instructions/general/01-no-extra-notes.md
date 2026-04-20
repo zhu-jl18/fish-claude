@@ -7,3 +7,4 @@
 - Do not leak editor/author process language into final docs. Final docs must read like finished content for readers, not like writing guidance or review notes to yourself.
 - In published docs, forbid editor-facing phrases such as “更稳妥的表述应是……”, “如果这页是写给别人看的……”, “建议写成……”, “可以表述为……”. Remove the framing and write the final sentence directly.
 - One Bad/Good Example: 错误写法：`因此，对外更稳妥的表述应是：Exa hosted MCP 提供免费计划，但官方未公开具体限流阈值。` 正确写法：`Exa hosted MCP 提供免费计划，但官方未公开具体限流阈值。`
+- In published docs, forbid self-referential, maintainer-facing, or pseudo-conversational filler such as explaining what the doc is “trying to do”, what the repo “now keeps”, or what is “being provided as a reference”. Write only the finished content a reader needs, not commentary about the writing/editing process.
