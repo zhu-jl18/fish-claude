@@ -52,8 +52,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         '--target-provider',
-        default='custom',
-        help='迁移后的目标 provider key，默认 custom',
+        default='openai',
+        help='迁移后的目标 provider key，默认 openai',
     )
     parser.add_argument(
         '--keep-provider',

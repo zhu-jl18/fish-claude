@@ -10,15 +10,8 @@
 | Claude Code | `~/.claude/CLAUDE.md`          |
 | Codex       | `~/.codex/AGENTS.md`           |
 | Gemini CLI  | `~/.gemini/GEMINI.md`          |
-| AmpCode     | `~/.config/amp/AGENTS.md`      |
+| Warp        | Warp Drive（云端，App 内 Personal → Rules，或 `/add-rule`） |
 
-
-## Claude Code 补充说明
-
-- Claude Code 读取的是 `CLAUDE.md`，不是 `AGENTS.md`。
-- `CLAUDE.md` 支持用 `@path/to/file.md` 导入其他文件；相对路径相对于导入语句所在文件解析，也支持绝对路径。
-- 导入支持递归展开，最多 5 层。
-- 如果仓库里已经为其他 agent 维护了 `AGENTS.md`，可以在 `CLAUDE.md` 里直接写 `@AGENTS.md`，再追加 Claude Code 专属规则。
 
 ## General
 
@@ -36,7 +29,7 @@
 | --- | --------------------------------------------- | -------------------------------------- | ----------------------------------------------------------------- |
 | 01  | [defaults](claude/01-defaults.md)             | 交互默认行为（语言、格式、先读后写）   | —                                                                 |
 | 02  | [code-quality](claude/02-code-quality.md)     | 代码质量标准、红线、安全、清理         | —                                                                 |
-| 03  | [research](claude/03-research.md)             | 查资料方法论（禁止猜测）               | [Context7](../mcp/context7.md)                                    |
+| 03  | [research](claude/03-research.md)             | 查资料方法论（禁止猜测）               | [Context7](../mcp/context7.md), [Grok Search](../skills/grok-search.md) |
 | 05  | [environment](claude/05-environment.md)       | OS / Shell / Python 环境配置           | —                                                                 |
 | 06  | [priority-stack](claude/06-priority-stack.md) | 优先级堆栈（最高级行为约束）           | —                                                                 |
 | 07  | [dev-workflow](claude/07-dev-workflow.md)     | code-dispatcher 开发工作流（按需启用） | [code-dispatcher-toolkit](../packs/code-dispatcher-toolkit.md) |

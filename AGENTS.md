@@ -50,6 +50,10 @@ Module details and dependency info are documented in `agent-instructions/README.
 | `slash-commands/`              | Slash command prompt templates                                                             |
 | `sub-agents/`                  | Sub-agent role layers and related examples                                                 |
 | `packs/`                       | Composite packages (commands + skills + hooks + subagents) and external toolkit references |
+| `preset-cards/`                | Reusable preset cards / personality presets                                                 |
+| `themes/`                      | Warp / Claude Code theme references                                                         |
+| `tips/`                        | Practical knowledge fragments                                                               |
+| `reports/`                     | Deep-dive research reports                                                                  |
 
 ## Rules for Editing This Repo
 

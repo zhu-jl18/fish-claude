@@ -14,42 +14,44 @@
 
 ## 简介
 
-这个仓库用于分享我本人各种 Coding CLI 的项目文档规则模块、基础配置参考、packs、sub-agents、slash commands 和 skills 等，包括但不限于：
+分享我本人在用的 Coding CLI 配置、规则模块、skills、sub-agents、patch 和参考文档等。
 
 - Claude Code
 - Codex
 - Gemini CLI
 - Oh My Pi
+- Warp
 
-但不包括：
+不包括：
 - 🚫 OpenCode：就是构史
-
-另外也包含少量维护/迁移工具，主要用于清理或修复各类 CLI 的本地状态与历史数据。
 
 ## 目录结构
 
 ```text
 .
-├── agent-instructions/ # 用于拼装 AGENTS.md / CLAUDE.md / GEMINI.md 的规则模块
-├── config-files/       # settings.json / config.toml 等基础配置参考文件
+├── agent-instructions/ # 拼装 AGENTS.md / CLAUDE.md / GEMINI.md 的规则模块
+├── config-files/       # settings.json / config.toml 等基础配置参考
 ├── system-prompts/     # 上游 system prompt 参考副本
-├── mcp/             # MCP Server 安装配置指南
-├── output-styles/   # AI 输出风格/人格预设
-├── tools/           # 用户侧维护/迁移工具与说明
-├── skills/          # Skills 定义
-├── slash-commands/  # Slash Commands
-├── sub-agents/      # Sub-Agent role layer 与示例
-├── packs/           # 组合包与外部工具集参考
-├── preset-cards/    # 可复用的 preset card / 人格预设卡片
-└── ai-services/     # 常与 AI 工作流配合使用的外部 API 服务参考
+├── mcp/                # MCP Server 安装配置指南
+├── output-styles/      # AI 输出风格/人格预设
+├── tools/              # 维护/迁移工具
+├── skills/             # Skills 定义
+├── slash-commands/     # Slash Commands
+├── sub-agents/         # Sub-Agent role layer 与示例
+├── packs/              # 组合包与外部工具参考
+├── preset-cards/       # 可复用 preset card / 人格预设
+├── themes/             # Warp / Claude Code 主题参考
+├── tips/               # 实用知识碎片
+├── reports/            # 深度调研报告
+└── ai-services/        # 外部 API 服务参考
 ```
 
 ## 使用方法
 
 1. 克隆仓库到本地
-2. 从 `agent-instructions/` 中挑选模块，拼装你的 `AGENTS.md` / `CLAUDE.md` / `GEMINI.md`
-3. 参考 `config-files/` 中的 `settings.json` / `config.toml` 样例，填写模型、provider、认证和运行权限等基础设置
-4. 将文件放置到对应 CLI 工具的配置目录，并按个人需求继续调整
+2. 从 `agent-instructions/` 中挑选模块，拼装 `AGENTS.md` / `CLAUDE.md` / `GEMINI.md`
+3. 参考 `config-files/` 中的样例填写模型、provider、认证等基础设置
+4. MCP、skill、pack 等同样放到对应 CLI 的配置目录，按需调整
 
 ## 贡献
 
