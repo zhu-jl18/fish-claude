@@ -31,7 +31,6 @@ multi_agent_v2 = true
 # Copy the canonical role-layer templates from `sub-agents/codex/*.toml`
 # into `~/.codex/agents/`, then keep the relative `config_file` paths below.
 [agents]
-max_threads = 6
 max_depth = 1
 
 # Same-named `[agents.<role>]` entries override builtin role metadata.

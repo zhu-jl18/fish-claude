@@ -39,4 +39,4 @@ if multi_agent {
 - 同名 `[agents.<role>]` shadow 掉 builtin 对应项
 - role layer 只覆写文件里实际写出的键，其余继承父线程当前有效配置
 - spawn runtime 会重写 live `approval_policy`、`shell_environment_policy`、`sandbox`、`cwd`（源码 `core/src/tools/handlers/multi_agents_common.rs`），这几项放 role layer 里没用
-- `[agents]` 下的 `max_threads`、`max_depth` 控制并发与嵌套深度
+- `[agents]` 下的 `max_depth` 控制嵌套深度；启用 `multi_agent_v2` 时不要再设置 `max_threads`
