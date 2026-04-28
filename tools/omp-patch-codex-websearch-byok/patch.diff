@@ -1,6 +1,6 @@
 --- a/src/web/search/providers/codex.ts
 +++ b/src/web/search/providers/codex.ts
-@@ -2,12 +2,15 @@
+@@ -2,14 +2,17 @@
   * OpenAI Codex Web Search Provider
   *
   * Uses Codex's built-in web_search tool via the Responses API.
@@ -9,16 +9,18 @@
   * Returns synthesized answers with web search sources.
   */
  import * as os from "node:os";
--import { $env, getAgentDbPath, readSseJson } from "@oh-my-pi/pi-utils";
 +import * as path from "node:path";
+ import { getBundledModels } from "@oh-my-pi/pi-ai";
+ import { decodeJwt } from "@oh-my-pi/pi-ai/utils/oauth/openai-codex";
+-import { $env, getAgentDbPath, readSseJson } from "@oh-my-pi/pi-utils";
++import { $env, getAgentDbPath, getAgentDir, isEnoent, readSseJson } from "@oh-my-pi/pi-utils";
 +import { YAML } from "bun";
-+import { $env, getAgentDbPath, isEnoent, readSseJson } from "@oh-my-pi/pi-utils";
  import packageJson from "../../../../package.json" with { type: "json" };
 +import { resolveConfigValue } from "../../../config/resolve-config-value";
  import { AgentStorage } from "../../../session/agent-storage";
  import type { SearchResponse, SearchSource } from "../../../web/search/types";
  import { SearchProviderError } from "../../../web/search/types";
-@@ -21,9 +24,145 @@
+@@ -31,8 +34,29 @@
  const DEFAULT_INSTRUCTIONS =
  	"You are a helpful assistant with web search capabilities. Search the web to answer the user's question accurately and cite your sources.";
  
@@ -45,10 +47,14 @@
 +
  function getModel(): string {
 -	const configuredModel = $env.PI_CODEX_WEB_SEARCH_MODEL?.trim();
--	return configuredModel ? configuredModel : DEFAULT_MODEL;
-+	return resolveRequestedModel($env.PI_CODEX_WEB_SEARCH_MODEL)?.modelId ?? DEFAULT_MODEL;
-+}
-+
++	const configuredModel = resolveRequestedModel($env.PI_CODEX_WEB_SEARCH_MODEL)?.modelId;
+ 	if (configuredModel) return configuredModel;
+ 
+ 	const bundledModels = getBundledModels("openai-codex");
+@@ -43,6 +67,108 @@
+ 	return nonMini?.id ?? bundledModels[0]?.id ?? FALLBACK_MODEL;
+ }
+ 
 +interface ModelsConfigProvider {
 +	api?: string;
 +	baseUrl?: string;
@@ -76,10 +82,6 @@
 +
 +const RESPONSES_APIS = new Set(["openai-responses", "openai-codex-responses"]);
 +
-+function resolveAgentDir(): string {
-+	return process.env.PI_AGENT_DIR?.trim() || path.join(os.homedir(), ".omp", "agent");
-+}
-+
 +async function readYamlConfig<T>(filePath: string): Promise<T | null> {
 +	try {
 +		const raw = await Bun.file(filePath).text();
@@ -99,7 +101,7 @@
 +	const requestedByEnv = resolveRequestedModel($env.PI_CODEX_WEB_SEARCH_MODEL);
 +	if (requestedByEnv) return requestedByEnv;
 +
-+	const configPath = path.join(resolveAgentDir(), "config.yml");
++	const configPath = path.join(getAgentDir(), "config.yml");
 +	const config = await readYamlConfig<AgentConfig>(configPath);
 +	return resolveRequestedModel(config?.modelRoles?.default);
 +}
@@ -108,7 +110,7 @@
 +	providerName: string,
 +	providerConfig: ModelsConfigProvider,
 +	requestedModel: RequestedModel | null,
-+	): string | null {
++): string | null {
 +	const availableModels =
 +		providerConfig.models?.flatMap(model => {
 +			const modelId = model.id?.trim();
@@ -124,7 +126,7 @@
 +
 +async function loadBYOKConfig(): Promise<BYOKConfig | null> {
 +	const requestedModel = await getRequestedByokModel();
-+	const modelsPath = path.join(resolveAgentDir(), "models.yml");
++	const modelsPath = path.join(getAgentDir(), "models.yml");
 +	const config = await readYamlConfig<ModelsConfig>(modelsPath);
 +	const providers = config?.providers;
 +	if (!providers) return null;
@@ -155,6 +157,21 @@
 +	| { type: "byok"; baseUrl: string; apiKey: string; model: string }
 +	| { type: "oauth"; accessToken: string; accountId: string };
 +
+ export interface CodexSearchParams {
+ 	signal?: AbortSignal;
+ 	query: string;
+@@ -72,6 +198,7 @@
+ 	arguments?: string;
+ 	content?: CodexContentPart[];
+ 	summary?: Array<{ type: string; text: string }>;
++	action?: { type?: string; url?: string };
+ }
+ 
+ interface CodexContentPart {
+@@ -270,6 +397,16 @@
+ 	return null;
+ }
+ 
 +async function resolveCodexBackend(): Promise<CodexBackend | null> {
 +	const byok = await loadBYOKConfig();
 +	if (byok) return { type: "byok", ...byok };
@@ -163,68 +180,12 @@
 +	if (oauth) return { type: "oauth", ...oauth };
 +
 +	return null;
- }
- 
- export interface CodexSearchParams {
-@@ -60,6 +199,7 @@
- 	arguments?: string;
- 	content?: CodexContentPart[];
- 	summary?: Array<{ type: string; text: string }>;
-+	action?: { type?: string; url?: string };
- }
- 
- interface CodexContentPart {
-@@ -94,6 +234,49 @@
- 	return text.trim().toLowerCase() === "(see attached image)";
- }
- 
-+function addSource(sources: SearchSource[], source: SearchSource): void {
-+	if (!sources.some(existing => existing.url === source.url)) {
-+		sources.push(source);
-+	}
-+}
-+
-+function extractAnnotationSources(annotations: CodexAnnotation[] | undefined): SearchSource[] {
-+	const sources: SearchSource[] = [];
-+	if (!annotations) return sources;
-+
-+	for (const annotation of annotations) {
-+		const url = annotation.url?.trim();
-+		if (annotation.type !== "url_citation" || !url) continue;
-+		addSource(sources, { title: annotation.title?.trim() || url, url });
-+	}
-+
-+	return sources;
-+}
-+
-+// Some Codex-compatible gateways inline citations as markdown links instead of
-+// returning structured url_citation annotations. Preserve sources in that case.
-+function extractMarkdownSources(text: string): SearchSource[] {
-+	const sources: SearchSource[] = [];
-+
-+	for (const match of text.matchAll(/\[([^\]\n]+)\]\((https?:\/\/[^\s)]+)\)/g)) {
-+		const title = match[1]?.trim();
-+		const url = match[2]?.trim();
-+		if (!url) continue;
-+		addSource(sources, { title: title || url, url });
-+	}
-+
-+	return sources;
-+}
-+
-+function extractWebSearchActionSource(item: CodexResponseItem): SearchSource | null {
-+	if (item.type !== "web_search_call") return null;
-+
-+	const url = item.action?.url?.trim();
-+	if (!url) return null;
-+
-+	return { title: url, url };
 +}
 +
  /**
-  * Decodes a JWT token and extracts the payload.
-  * @param token - JWT token string
-@@ -174,6 +357,21 @@
+  * Builds HTTP headers for Codex API requests.
+  * @param accessToken - OAuth access token
+@@ -288,17 +425,33 @@
  	};
  }
  
@@ -243,10 +204,15 @@
 +	if (normalized.endsWith("/v1")) return `${normalized}/responses`;
 +	return `${normalized}/v1/responses`;
 +}
++
  /**
   * Calls the Codex Responses API with web search tool enabled.
   * Streams the response and collects all events.
-@@ -184,7 +382,7 @@
+- * @param auth - Authentication info (access token and account ID)
++ * @param backend - Search backend configuration
+  * @param query - Search query from the user
+  * @param options - Search options including system prompt and context size
+  * @returns Parsed response with answer, sources, and usage
   * @throws {SearchProviderError} If the API request fails
   */
  async function callCodexSearch(
@@ -255,16 +221,14 @@
  	query: string,
  	options: { signal?: AbortSignal; systemPrompt?: string; searchContextSize?: "low" | "medium" | "high" },
  ): Promise<{
-@@ -193,11 +391,20 @@
- 	model: string;
+@@ -308,10 +461,19 @@
  	requestId: string;
  	usage?: { inputTokens: number; outputTokens: number; totalTokens: number };
--}> {
+ }> {
 -	const url = `${CODEX_BASE_URL}${CODEX_RESPONSES_PATH}`;
 -	const headers = buildCodexHeaders(auth.accessToken, auth.accountId);
 -
 -	const requestedModel = getModel();
-+	}> {
 +	let url: string;
 +	let headers: Record<string, string>;
 +	let requestedModel: string;
@@ -281,88 +245,48 @@
  
  	const body: Record<string, unknown> = {
  		model: requestedModel,
-@@ -216,6 +423,9 @@
- 				search_context_size: options.searchContextSize ?? "high",
- 			},
- 		],
-+		// Some Responses-compatible gateways do not reliably invoke built-in web search
-+		// from prompt pressure alone; force the tool so Codex search behaves deterministically.
-+		tool_choice: { type: "web_search" },
- 		instructions: options.systemPrompt ?? DEFAULT_INSTRUCTIONS,
- 	};
- 
-@@ -223,6 +433,7 @@
- 		method: "POST",
- 		headers,
- 		body: JSON.stringify(body),
-+		signal: options.signal,
- 	});
- 
- 	if (!response.ok) {
-@@ -237,7 +448,8 @@
- 	// Parse SSE stream
+@@ -354,6 +516,7 @@
  	const answerParts: string[] = [];
  	const streamedAnswerParts: string[] = [];
--	const sources: SearchSource[] = [];
-+	const annotationSources: SearchSource[] = [];
+ 	const sources: SearchSource[] = [];
 +	const toolSources: SearchSource[] = [];
  	let model = requestedModel;
  	let requestId = "";
  	let usage: { inputTokens: number; outputTokens: number; totalTokens: number } | undefined;
-@@ -255,31 +467,21 @@
- 			const item = rawEvent.item as CodexResponseItem | undefined;
- 			if (!item) continue;
- 
--			// Handle text message content and extract sources from annotations
- 			if (item.type === "message" && item.content) {
- 				for (const part of item.content) {
--					if (part.type === "output_text" && part.text) {
--						answerParts.push(part.text);
--
--						// Extract sources from url_citation annotations
--						if (part.annotations) {
--							for (const annotation of part.annotations) {
--								if (annotation.type === "url_citation" && annotation.url) {
--									// Deduplicate by URL
--									if (!sources.some(s => s.url === annotation.url)) {
--										sources.push({
--											title: annotation.title ?? annotation.url,
--											url: annotation.url,
--										});
--									}
--								}
--							}
--						}
-+					if (part.type !== "output_text" || !part.text) continue;
-+					answerParts.push(part.text);
-+					for (const source of extractAnnotationSources(part.annotations)) {
-+						addSource(annotationSources, source);
- 					}
+@@ -390,6 +553,11 @@
  				}
  			}
  
--			// Handle reasoning summary as part of answer
-+			const toolSource = extractWebSearchActionSource(item);
-+			if (toolSource) {
-+				addSource(toolSources, toolSource);
++			if (item.type === "web_search_call") {
++				const url = item.action?.url?.trim();
++				if (url) addSource(toolSources, { title: url, url });
 +			}
 +
+ 			// Handle reasoning summary as part of answer
  			if (item.type === "reasoning" && item.summary) {
  				for (const part of item.summary) {
- 					if (part.type === "summary_text" && part.text) {
-@@ -320,6 +522,10 @@
- 			: streamedAnswer.length > 0
- 				? streamedAnswer
- 				: finalAnswer;
-+	// Prefer structured citations when present, then fall back to inline markdown links
-+	// returned by Codex-compatible gateways, then finally to visited tool URLs.
-+	const markdownSources = annotationSources.length === 0 && answer.length > 0 ? extractMarkdownSources(answer) : [];
-+	const sources = annotationSources.length > 0 ? annotationSources : markdownSources.length > 0 ? markdownSources : toolSources;
+@@ -439,6 +607,11 @@
+ 			addSource(sources, source);
+ 		}
+ 	}
++	if (sources.length === 0) {
++		for (const source of toolSources) {
++			addSource(sources, source);
++		}
++	}
  
  	return {
  		answer,
-@@ -338,14 +544,14 @@
-  * @throws {Error} If no Codex OAuth credentials are configured
+@@ -451,20 +624,20 @@
+ 
+ /**
+  * Executes a web search using OpenAI Codex's built-in web search tool.
+- * Requires OAuth credentials stored in agent.db for provider "openai-codex".
++ * Supports a configured Responses-compatible backend before falling back to ChatGPT OAuth.
+  * @param params - Search parameters including query and optional settings
+  * @returns Search response with synthesized answer, sources, and usage
+- * @throws {Error} If no Codex OAuth credentials are configured
++ * @throws {Error} If no Codex search backend is configured
   */
  export async function searchCodex(params: CodexSearchParams): Promise<SearchResponse> {
 -	const auth = await findCodexAuth();
@@ -380,8 +304,12 @@
  		systemPrompt: params.system_prompt,
  		searchContextSize: params.search_context_size ?? "high",
  	});
-@@ -378,8 +584,8 @@
-  * @returns True if valid OAuth credentials exist for openai-codex
+@@ -494,11 +667,11 @@
+ 
+ /**
+  * Checks if Codex web search is available.
+- * @returns True if valid OAuth credentials exist for openai-codex
++ * @returns True if a configured backend or valid OAuth credentials exist for openai-codex
   */
  export async function hasCodexSearch(): Promise<boolean> {
 -	const auth = await findCodexAuth();
@@ -391,7 +319,7 @@
  }
  
  /** Search provider for OpenAI Codex web search. */
-@@ -388,7 +594,7 @@
+@@ -507,7 +680,7 @@
  	readonly label = "Codex";
  
  	isAvailable(): Promise<boolean> {
@@ -400,21 +328,25 @@
  	}
  
  	search(params: SearchParams): Promise<SearchResponse> {
-
 --- a/src/cli/web-search-cli.ts
 +++ b/src/cli/web-search-cli.ts
-@@ -6,8 +6,9 @@
+@@ -6,8 +6,14 @@
  
  import { APP_NAME } from "@oh-my-pi/pi-utils";
  import chalk from "chalk";
 +import { Settings } from "../config/settings";
  import { initTheme, theme } from "../modes/theme/theme";
 -import { runSearchQuery, type SearchQueryParams } from "../web/search/index";
-+import { isSearchProviderPreference, runSearchQuery, setPreferredSearchProvider, type SearchQueryParams } from "../web/search/index";
++import {
++	isSearchProviderPreference,
++	runSearchQuery,
++	setPreferredSearchProvider,
++	type SearchQueryParams,
++} from "../web/search/index";
  import { SEARCH_PROVIDER_ORDER } from "../web/search/provider";
  import { renderSearchResult } from "../web/search/render";
  import type { SearchProviderId } from "../web/search/types";
-@@ -85,6 +86,13 @@
+@@ -85,6 +91,13 @@
  		process.exit(1);
  	}
  

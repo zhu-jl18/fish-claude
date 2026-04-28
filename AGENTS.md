@@ -20,10 +20,10 @@ Each `.md` file in `agent-instructions/general/`, `agent-instructions/claude/`, 
 cat general/01-no-extra-notes.md claude/01-defaults.md claude/02-code-quality.md ... > CLAUDE.md
 
 # Codex
-cat general/01-no-extra-notes.md codex/01-basic-rules.md codex/02-text-editing-tool.md ... > AGENTS.md
+cat general/01-no-extra-notes.md codex/01-basic-rules.md codex/02-inherited-tool.md ... > AGENTS.md
 
 # Oh My Pi
-cat general/01-no-extra-notes.md oh-my-pi/01-defaults.md oh-my-pi/03-code-style.md ... > AGENTS.md
+cat general/01-no-extra-notes.md oh-my-pi/01-defaults.md oh-my-pi/02-code-style.md ... > AGENTS.md
 
 # Gemini CLI
 cat general/01-no-extra-notes.md gemini/01-reasoning-depth.md ... > GEMINI.md
@@ -62,7 +62,7 @@ Module details and dependency info are documented in `agent-instructions/README.
 3. **Do NOT force optional modules into default configurations.**
 4. **Keep modules composable**: one file = one responsibility; edits must preserve copy-paste assembly.
 5. **Minimal changes only**: small, focused edits scoped to the user's request; do not modify unrelated modules.
-6. **If file structure changes**, update index docs (`agent-instructions/README.md`, `system-prompts/README.md`, `mcp/README.md`, `packs/README.md`).
+6. **If file structure changes**, update the corresponding directory's `README.md` (every second-level directory carries its own index).
 7. **For `tools/`**, keep published `README.md` files reader-facing only. Put maintenance conventions in this `AGENTS.md`, not in tool docs. Organize `tools/` as one tool per second-level directory with a colocated `README.md`, and keep `tools/README.md` as the index.
 
 # Git Commit Message Format

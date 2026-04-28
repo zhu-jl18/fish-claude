@@ -20,5 +20,6 @@
 | [Grok Search](grok-search.md) | `abelxiaoxing/agent-toolkit` | Claude Code | 用 Grok API + Tavily 替代内置 WebSearch/WebFetch 的 CLI skill，支持 Windows / Linux / macOS |
 | [Sync Readme](sync-readme.md) | `Li-ionFractalNanocore/cc-wrap` | Oh My Pi / Claude Code / Codex / Gemini CLI | 多语言 README 同步 skill：识别最新版本并翻译/同步其他 README 文件，也适合配置说明与安装文档联动更新 |
 | [Karpathy Guidelines](karpathy-guidelines.md) | `forrestchang/andrej-karpathy-skills` | Claude Code / Codex | 基于 Andrej Karpathy 对 LLM coding pitfalls 的观察整理的行为约束 skill：强调先澄清假设、优先简单方案、做手术式变更，并把任务改写成可验证目标 |
+| [Grill Me](grill-me/) | `mattpocock/skills` | Claude Code / Codex / Oh My Pi | 规划/设计压力测试 skill：逐题追问决策树、给出推荐答案；可从代码库获得答案时先查代码而不是追问用户 |
 | [Gemini Deep Reasoning](gemini-deep-reasoning/) | [@googleaidevs](https://x.com/googleaidevs/status/1996271402266017901) | Gemini CLI | Agentic 深度推理系统指令：结构化规划、风险评估、溯因推理、持久问题解决 |
 | [GPT-Isms Stamp Out](gpt-isms-stamp-out/) | 自建 | Claude Code | GPT-5.4 口癖清除 skill：中英文 7 级检测，覆盖结构性句式、废话填充、谄媚伪共情、互联网黑话、高频词汇 |

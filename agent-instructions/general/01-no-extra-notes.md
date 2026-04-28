@@ -1,4 +1,4 @@
-# No Extra Notes
+# No Extra Notes When Updating Documentation
 
 - Do not add an extra note, reminder, footnote, or commentary line after the main doc structure is already updated and correct.
 - Preserve visual consistency. Do not insert one-off explanatory lines that break the page rhythm.
