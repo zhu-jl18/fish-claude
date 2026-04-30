@@ -1,12 +1,13 @@
 --- a/src/modes/components/status-line/presets.ts
 +++ b/src/modes/components/status-line/presets.ts
-@@ -2,7 +2,7 @@
+@@ -1,9 +1,9 @@
  import type { PresetDef, StatusLinePreset } from "./types";
- 
+
  export const STATUS_LINE_PRESETS: Record<StatusLinePreset, PresetDef> = {
  	default: {
--		leftSegments: ["pi", "model", "plan_mode", "path", "git", "pr", "context_pct", "token_total", "cost"],
-+		leftSegments: ["pi", "model", "plan_mode", "context_pct", "token_total", "cost", "path", "git", "pr"],
+-		leftSegments: ["pi", "model", "mode", "path", "git", "pr", "context_pct", "token_total", "cost"],
++		leftSegments: ["pi", "model", "mode", "context_pct", "token_total", "cost", "path", "git", "pr"],
  		rightSegments: ["session_name"],
  		separator: "powerline-thin",
  		segmentOptions: {
+ 			model: { showThinkingLevel: true },

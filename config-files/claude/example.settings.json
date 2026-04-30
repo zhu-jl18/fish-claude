@@ -10,7 +10,14 @@
         "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-opus-4-6",
         "ANTHROPIC_MODEL": "claude-opus-4-6",
         "ANTHROPIC_REASONING_MODEL": "claude-opus-4-6",
-        "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
+        "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+        "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+        "CLAUDE_CODE_ATTRIBUTION_HEADER": "0",
+        "DISABLE_INSTALLATION_CHECKS": "1",
+        "ENABLE_TOOL_SEARCH": "1",
+        "CLAUDE_CODE_FORK_SUBAGENT": "1",
+        "CLAUDE_CODE_DISABLE_BACKGROUND_TASKS": "1",
+        "CLAUDE_CODE_SIMPLE_SYSTEM_PROMPT": "1"
     },
     "includeCoAuthoredBy": true,
     "statusLine": {

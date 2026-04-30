@@ -1,28 +1,118 @@
 providers:
-  custom-provider:
-    baseUrl: https://your-openai-compatible-base-url.example.com/v1
-    apiKey: sk-your-api-key-here
+  codex-owl:
+    baseUrl: https://api.example.com/v1
+    apiKey: sk-your-codex-owl-api-key-here
     api: openai-responses
     authHeader: true
     models:
-      - id: gpt-5.4
-        name: GPT-5.4 (Custom)
-        contextWindow: 258000
-        maxTokens: 128000
-        input:
-          - text
-          - image
       - id: gpt-5.4(high)
-        name: GPT-5.4(high) (Custom)
-        contextWindow: 258000
+        name: GPT-5.4(high) (owl)
+        contextWindow: 666000
         maxTokens: 128000
         input:
           - text
           - image
       - id: gpt-5.4(xhigh)
-        name: GPT-5.4(xhigh) (Custom)
-        contextWindow: 258000
+        name: GPT-5.4(xhigh) (owl)
+        contextWindow: 666000
         maxTokens: 128000
         input:
           - text
           - image
+      - id: gpt-5.5(xhigh)
+        name: GPT-5.5(xhigh) (owl)
+        contextWindow: 250000
+        maxTokens: 128000
+        input:
+          - text
+          - image
+      - id: gpt-5.5(high)
+        name: GPT-5.5(high) (owl)
+        contextWindow: 250000
+        maxTokens: 128000
+        input:
+          - text
+          - image
+
+  deepseek:
+    baseUrl: https://api.deepseek.com
+    api: openai-completions
+    apiKey: sk-your-deepseek-api-key-here
+    authHeader: true
+    models:
+      - id: deepseek-v4-pro
+        name: DeepSeek V4 Pro
+        reasoning: true
+        thinking:
+          minLevel: high
+          maxLevel: xhigh
+          mode: effort
+        input:
+          - text
+        contextWindow: 1000000
+        maxTokens: 384000
+        compat:
+          supportsDeveloperRole: false
+          supportsReasoningEffort: true
+          maxTokensField: max_tokens
+          supportsToolChoice: false
+          requiresReasoningContentForToolCalls: true
+          requiresAssistantContentForToolCalls: true
+          reasoningEffortMap:
+            high: high
+            xhigh: max
+          extraBody:
+            thinking:
+              type: enabled
+      - id: deepseek-v4-flash
+        name: DeepSeek V4 Flash
+        reasoning: true
+        thinking:
+          minLevel: high
+          maxLevel: xhigh
+          mode: effort
+        input:
+          - text
+        contextWindow: 1000000
+        maxTokens: 384000
+        compat:
+          supportsDeveloperRole: false
+          supportsReasoningEffort: true
+          maxTokensField: max_tokens
+          supportsToolChoice: false
+          requiresReasoningContentForToolCalls: true
+          requiresAssistantContentForToolCalls: true
+          reasoningEffortMap:
+            high: high
+            xhigh: max
+          extraBody:
+            thinking:
+              type: enabled
+
+  xiaomi-token-plan:
+    baseUrl: https://token-plan-cn.xiaomimimo.com/anthropic
+    apiKey: tp-your-xiaomi-token-plan-key-here
+    api: anthropic-messages
+    models:
+      - id: mimo-v2.5-pro
+        name: Xiaomi MiMo V2.5 Pro (Token Plan)
+        reasoning: true
+        thinking:
+          minLevel: minimal
+          maxLevel: xhigh
+          mode: budget
+        input:
+          - text
+        contextWindow: 1048576
+        maxTokens: 131072
+      - id: mimo-v2.5
+        name: Xiaomi MiMo V2.5 (Token Plan)
+        reasoning: true
+        thinking:
+          minLevel: minimal
+          maxLevel: xhigh
+          mode: budget
+        input:
+          - text
+        contextWindow: 1048576
+        maxTokens: 131072
