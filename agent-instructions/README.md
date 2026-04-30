@@ -30,10 +30,9 @@
 | 01  | [defaults](claude/01-defaults.md)             | 交互默认行为（语言、格式、先读后写）   | —                                                                 |
 | 02  | [code-quality](claude/02-code-quality.md)     | 代码质量标准、红线、安全、清理         | —                                                                 |
 | 03  | [research](claude/03-research.md)             | 查资料方法论（禁止猜测）               | [Context7](../mcp/context7.md), [Grok Search](../skills/grok-search.md) |
-| 04  | [priority-stack](claude/04-priority-stack.md) | 优先级堆栈（最高级行为约束）           | —                                                                 |
-| 05  | [dev-workflow](claude/05-dev-workflow.md)     | code-dispatcher 开发工作流（按需启用） | [code-dispatcher-toolkit](../packs/code-dispatcher-toolkit.md) |
-| 06  | [playwright](claude/06-playwright.md)         | Playwright UI 验证规则（按需启用）     | [Playwright](../mcp/playwright.md)                                |
-| 07  | [agent-teams](claude/07-agent-teams.md)       | Agent Teams 使用规范（按需启用）       | —                                                                 |
+| 04  | [dev-workflow](claude/04-dev-workflow.md)     | code-dispatcher 开发工作流（按需启用） | [code-dispatcher-toolkit](../packs/code-dispatcher-toolkit.md) |
+| 05  | [playwright](claude/05-playwright.md)         | Playwright UI 验证规则（按需启用）     | [Playwright](../mcp/playwright.md)                                |
+| 06  | [agent-teams](claude/06-agent-teams.md)       | Agent Teams 使用规范（按需启用）       | —                                                                 |
 
 
 

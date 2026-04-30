@@ -80,5 +80,6 @@ Use conventional commits format:
 ## Local Repo Clones
 
 If you are on my WSL2 environment, you find these git repo cloned when you need:
-- `codex`、`oh-my-pi`、`gemini-cli`、`rtk` → `~/01-workspace/`
+- `codex`, `oh-my-pi`, `gemini-cli`, `rtk`, `caveman`, `context-mode`, `pi-mono`, `tokscale` → `~/01-workspace/`
+- `myclaude`, `beautiful-mermaid-cli`, `awesome-deepseek-agent` → `~/02-workspace/`
 - `code-dispatcher-toolkit` → `~/personal-workspace/`

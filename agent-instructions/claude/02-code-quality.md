@@ -1,11 +1,15 @@
 # Code Quality
 
-## Rules
+## Change Scope
 
-- **Thorough changes only**: Whether maintaining, adding features, or refactoring —
-  do a **clean, full rewrite** of all related code. No patch stacking,
-  no remnants left behind.
+- Prefer clean rewrites over incremental patches when modifying a cohesive unit.
+- For targeted fixes (single bug, small feature), change only what's necessary — but leave no dead code or orphaned remnants behind.
+
+## Error Handling
+
+<important if="you are modifying critical paths, failure behavior, or retry logic">
 - Critical paths must have explicit error handling.
+</important>
 
 ## Red Lines
 
@@ -16,7 +20,10 @@
 
 - Never hardcode secrets (keys/passwords/tokens).
 - Never commit `.env` files or any credentials.
+
+<important if="you are handling user input, APIs, CLIs, or external data sources">
 - Validate user input at trust boundaries (APIs, CLIs, external data sources).
+</important>
 
 ## Cleanup
 
