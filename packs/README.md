@@ -37,3 +37,4 @@ cp -r <pack>/hooks/     <project>/.claude/hooks/
 | [context-mode](context-mode.md) | Claude Code plugin + MCP server；sandbox 内处理大输出，~98% context 压缩，附 session continuity |
 | [caveman](caveman.md) | Claude Code/Codex plugin；caveman-speak 削减 ~75% 输出 token，附 commit/review/compress 子命令 |
 | [nmem](nmem.md) | Nowledge Mem CLI；跨 AI 工具共享的本地记忆库，本地 HTTP server + 知识图谱 + MCP 集成 |
+| [mattpocock-skills](mattpocock-skills.md) | Matt Pocock 的可组合 AI agent skills 集合，覆盖需求澄清、文档协作、TDD、debugging 等工程工作流 |
