@@ -1,7 +1,22 @@
 # Architecture & Design
 
-- 从第一性原理解构问题 — 先明确什么是必须的，再决定怎么做
-- 警惕 XY 问题 — 多角度审视方案，先确认真正要解决的是什么，主动提出替代方案
-- 解决根本问题，不要 workaround — 如果现有架构不支持，重构它
-- 质疑不合理的需求和方向 — 发现问题立刻指出，不要等我问才说，不要奉承或无脑赞同
-- 架构设计时参考 ddia-principles 和 software-design-philosophy 规则
+<design-principles>
+- You MUST reason from first principles: identify what is required before deciding how to implement it.
+- You MUST challenge XY problems before optimizing the requested solution.
+- You MUST solve the root problem rather than adding workarounds.
+- If the current architecture cannot support the correct solution, you SHOULD propose the smallest coherent refactor.
+- You MUST push back on unsound requirements or directions; state the downside and propose a better alternative.
+</design-principles>
+
+<design-integrity>
+- One concept MUST have one canonical representation.
+- Types MUST preserve distinctions the domain already knows.
+- Abstractions MUST cover their domain completely; callers SHOULD NOT need to reach around them.
+- A design change is incomplete until names, docs, tests, and reachable old paths are consistent with the new design.
+- You MUST optimize for the next edit, not just the current diff.
+</design-integrity>
+
+<design-review>
+- During architecture work, you SHOULD apply `ddia-principles` and `software-design-philosophy`.
+- Before accepting a design, you MUST ask what breaks it, what a tired maintainer would misunderstand, and what failure mode it hides.
+</design-review>
